@@ -1,0 +1,43 @@
+---
+title: "Statistiques Descriptives 2"
+author: "Ibrahim BENKHERFELLAH & Axel COULET"
+date: "2025-02-21"
+output: pdf_document
+lang: fr
+---
+
+#Exercice 1
+
+##1\
+
+Tout d'abord, qu'est-ce qu'une variable explicative et une variable expliquée ?
+
+- Une variable explicative est la variable qui permet d'expliquer une autre variable. Elle est souvent notée X.
+Sur une représentation graphique, la variable explicative est représentée en abscisse.
+
+- Une variable expliquée est la variable pour laquelle on cherche un modèle de prévision. Son évolution dépend d'une ou de plusieurs autres variables. Elle est souvent notée Y. 
+Sur une représentation graphique, la variable expliquée est représentée en ordonnée.\
+
+Ainsi, dans le cadre de notre exercice, la variable explicative est le **dosage de sérum X (en mL)**. Et la variable expliquée est la **quantité de bactéries Y (en UFC/mL)**, car c'est celle qui est mesurée en fonction du dosage de sérum et qui dépend potentiellement de X.\
+
+
+##2\
+
+```{r}
+library(ggplot2)    # Importation de la librairie ggplot2
+
+data <- read.csv("donnees_r.csv", header = TRUE)   # Lecture du fichier de données
+
+ggplot(data, aes(x = X, y = Y)) +      # Création du graphique
+  geom_point(color = "red") +          # Ajout des points et de leur couleur 
+  labs(title = "Nuage de points : Dosage vs Bactéries",     # Ajout du Titre
+       x = "Dosage de sérum (mL)",                  # Titre de l'axe des abscisses
+       y = "Quantité de bactéries (UFC/mL)") +      # Titre de l'axe des ordonnées
+  theme_minimal() +                                 # Utilisation d'un thème minimal
+  theme(plot.margin = margin(1, 1, 1, 1, "cm"))     # Définition des marges du graphique
+
+```
+
+
+
+
