@@ -10,15 +10,15 @@ lang: fr
 
 # Exercice 1
 
-## 1\ 
+## 1
 
 Tout d'abord, qu'est-ce qu'une variable explicative et une variable expliquée ?
 
--   Une variable explicative est la variable qui permet d'expliquer une autre variable. Elle est souvent notée X. Sur une représentation graphique, la variable explicative est représentée en abscisse.
+-   Une variable explicative est la variable qui permet d'expliquer une autre variable. Elle est souvent notée $X$. Sur une représentation graphique, la variable explicative est représentée en abscisse.
 
--   Une variable expliquée est la variable pour laquelle on cherche un modèle de prévision. Son évolution dépend d'une ou de plusieurs autres variables. Elle est souvent notée Y. Sur une représentation graphique, la variable expliquée est représentée en ordonnée.\
+-   Une variable expliquée est la variable pour laquelle on cherche un modèle de prévision. Son évolution dépend d'une ou de plusieurs autres variables. Elle est souvent notée $Y$. Sur une représentation graphique, la variable expliquée est représentée en ordonnée.\
 
-Ainsi, dans le cadre de notre exercice, la variable explicative est le **dosage de sérum X (en mL)**. Et la variable expliquée est la **quantité de bactéries Y (en UFC/mL)**, car c'est celle qui est mesurée en fonction du dosage de sérum et qui dépend potentiellement de X.\
+Ainsi, dans le cadre de notre exercice, la variable explicative est le **dosage de sérum X (en mL)**. Et la variable expliquée est la **quantité de bactéries Y (en UFC/mL)**, car c'est celle qui est mesurée en fonction du dosage de sérum et qui dépend potentiellement de $X$.\
 
 ## 2\
 
@@ -26,6 +26,7 @@ Ainsi, dans le cadre de notre exercice, la variable explicative est le **dosage 
 font_import()
 loadfonts()
 ```
+
 
 
 ```{r echo=FALSE, message=FALSE, fig.align='center'}
@@ -45,18 +46,29 @@ ggplot(data, aes(x = X, y = Y)) +      # Création du graphique
 
 ```
 
+
+
 ## 3
 
-a) Moyenne de la quantité de bactéries: __`r mean(data$Y)`__  
-Variance de la quantité de bactéries: __`r var(data$Y)`__
-a) Box-plot de la dsitribution de la variable: __quantité de bactéries__
+a\)
+
+- Moyenne de la quantité de bactéries : __$\overline{y} = `r mean(data$Y)`$__  
+
+- Variance de la quantité de bactéries : __$Var(y) = `r var(data$Y)`$__ 
+
+
+b\) Box-plot de la dsitribution de la variable : __Quantité de bactéries__ \
+
+
 
 ```{r echo=FALSE, fig.align='center'}
+
 ggplot(data, aes(y = Y)) +
   geom_boxplot() +
   labs(title = "Boîte à moustache de la distribution\nde la quantité de bactéries") +      
   theme_fivethirtyeight() +
   theme(text = element_text(family = "Segoe UI", size=14))
+
 ```
 
 
