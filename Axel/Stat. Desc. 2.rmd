@@ -50,17 +50,19 @@ Ainsi, dans le cadre de notre exercice, la variable explicative est le **dosage 
 Représentation du nuage de points de la statistique bi-variée ($x_{i};y_{i}$)\
 
 ```{r echo=FALSE, fig.align='center'}
-data <- read.csv("../donnees_r.csv", header = TRUE, colClasses = c("numeric", "numeric")) # Lecture du fichier de données
 
-ggplot(data, aes(x = X, y = Y)) + # Création du graphique
-  geom_point(color = "red", size = 2) + # Ajout des points et de leur couleur
+data <- read.csv("../donnees_r.csv", header = TRUE, colClasses = c("numeric", "numeric"))
+
+ggplot(data, aes(x = X, y = Y)) +
+  geom_point(color = "red", size = 2) +
   labs(
-    title = "Nuage de points : Dosage vs Bactéries", # Ajout du Titre
-    x = "Dosage de sérum (mL)", # Titre de l'axe des abscisses
+    title = "Nuage de points : Dosage vs Bactéries",
+    x = "Dosage de sérum (mL)",
     y = "Quantité de bactéries (UFC/mL)"
-  ) + # Titre de l'axe des ordonnées
+  ) +
   theme_fivethirtyeight() +
-  theme(axis.title = element_text(), text = element_text(family = "Segoe UI", size = 14)) # Utilisation d'un thème minimal    # Définition des marges du graphique
+  theme(axis.title = element_text(), text = element_text(family = "Segoe UI", size = 14))
+
 ```
 
 
@@ -93,9 +95,11 @@ L'analyse de la quantité de bactéries montre une moyenne de __$0,4389205$__ et
 
 ## __4.__
 
-Covariance de $X$ et $Y$ __:__ __$cov(X, Y) = −0,7391376$__
+Nous savons que la Covariance de $X$ et $Y$ est : $$Cov(X,Y) = \frac{1}{N}\sum_{i=1}^{i=N}(X_i - \overline{X})(Y_i - \overline{Y}) = (\frac{1}{N}\sum_{i=1}^{i=N}(X_iY_i)) - \overline{X}\overline{Y}$$\
 
-La covariance de __$−0,7391376$__ entre les variables $X$ et $Y$ indique une forte relation inverse, suggérant que lorsque $X$ augmente, $Y$ tend à diminuer, et vice versa. Ce qui correspond a ce que l'on peut observer sur le nuage de points.
+On trouve donc : __$Cov(X, Y) = −0,7391376$__\
+
+La covariance entre les deux variables étant de __$−0,7391376$__, cela indique une assez forte relation. Le signe étant négative, cela  indique que $X$ et $Y$ évoluent de manière opposé. Autrement dit, lorsque $X$ augmente, $Y$ quant à lui à diminuer, et inversement. Ce qui coincide avec l'observation faite ci-dessus, dans le nuage de point.
 
 ## __5.__
 
@@ -111,11 +115,15 @@ Version avec les deux sur le meme graph
 ggplot(data) +
   geom_qq(aes(sample = X, color = "X"), geom = "point", position = "identity") +
   geom_qq(aes(sample = Y, color = "Y"), geom = "point", position = "identity") +
-  labs(title = "Q-Q Plot de X et Y", color = "Variable") +
+  labs(title = "Q-Q Plot de X et Y", color = "Variable :") +
   scale_color_manual(values = c("X" = "red", "Y" = "blue")) +
   theme_fivethirtyeight() +
   theme(text = element_text(family = "Segoe UI", size = 14))
 ```
+
+Nous pouvons observer que la variable $Y$ a l'air de suivre une distribution normale. En effet, les points sont gloabelement alignés.\
+
+Cependant, pour $X$, c'est tout l'inverse ! Pour une distribution normale, de manière graphique (avec Q-Q Plot), nous nous attendons à voir une droite se déssiner. Or, ici, on observe une courbure marquée, montrant ainsi que $X$ ne suit pas une distribution normale.
 
 <br>
 

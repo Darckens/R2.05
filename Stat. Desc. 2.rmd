@@ -34,15 +34,15 @@ library(ggplot2)    # Importation de la librairie ggplot2
 library(ggthemes)
 library(extrafont)
 
-data <- read.csv("donnees_r.csv", header = TRUE)   # Lecture du fichier de données
+data <- read.csv("donnees_r.csv", header = TRUE)                 # Lecture du fichier de données
 
-ggplot(data, aes(x = X, y = Y)) +      # Création du graphique
-  geom_point(color="red", size=2) +          # Ajout des points et de leur couleur 
-  labs(title = "Nuage de points : Dosage vs Bactéries",     # Ajout du Titre
-       x = "Dosage de sérum (mL)",                  # Titre de l'axe des abscisses
-       y = "Quantité de bactéries (UFC/mL)") +      # Titre de l'axe des ordonnées
+ggplot(data, aes(x = X, y = Y)) +                                # Création du graphique
+  geom_point(color="red", size=2) +                              # Ajout des points et de leur couleur 
+  labs(title = "Nuage de points : Dosage vs Bactéries",          # Ajout du Titre
+       x = "Dosage de sérum (mL)",                               # Titre de l'axe des abscisses
+       y = "Quantité de bactéries (UFC/mL)") +                  # Titre de l'axe des ordonnées
   theme_fivethirtyeight() +
-  theme(axis.title = element_text(), text = element_text(family = "Segoe UI", size=14))                                 # Utilisation d'un thème minimal    # Définition des marges du graphique
+  theme(axis.title = element_text(), text = element_text(family = "Segoe UI", size=14))
 
 ```
 
