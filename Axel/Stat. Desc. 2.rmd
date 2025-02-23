@@ -11,7 +11,7 @@ lang: fr
 ```{r eval=FALSE, include=FALSE}
 # Run this the first time you open the document to install all the required packages
 
-list.of.packages <- c("ggplot2", "ggthemes", "extrafont", "gridExtra")
+list.of.packages <- c("ggplot2", "ggthemes", "extrafont", "gridExtra", "lmtest")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
 if (length(new.packages)) install.packages(new.packages)
 ```
@@ -23,6 +23,7 @@ library(ggplot2)
 library(ggthemes)
 library(extrafont)
 library(gridExtra)
+library(lmtest)
 ```
 
 ```{r eval=FALSE, include=FALSE}
@@ -48,7 +49,7 @@ Ainsi, dans le cadre de notre exercice, la variable explicative est le **dosage 
 
 Représentation du nuage de points de la statistique bi-variée ($x_{i};y_{i}$)\
 
-```{r echo=FALSE, message=FALSE, fig.align='center'}
+```{r echo=FALSE, fig.align='center'}
 data <- read.csv("../donnees_r.csv", header = TRUE, colClasses = c("numeric", "numeric")) # Lecture du fichier de données
 
 ggplot(data, aes(x = X, y = Y)) + # Création du graphique
@@ -68,9 +69,9 @@ ggplot(data, aes(x = X, y = Y)) + # Création du graphique
 
 a\) Calcul de la moyenne et de la variance de la quantité de bactéries
 
-- Moyenne : __$\overline{y} = `r mean(data$Y)`$__  
+- Moyenne : __$\overline{y} = 0,4389205$__  
 
-- Variance : __$Var(y) = `r var(data$Y)`$__ 
+- Variance : __$Var(y) = 0,0684857$__
 
 <br>   
 
@@ -88,13 +89,13 @@ ggplot(data, aes(y = Y)) +
 
 c\) Analyse des résultats obtenus
 
-L'analyse de la quantité de bactéries montre une moyenne de __0.4389205__ et une variance de __0.0684857__, indiquant une dispersion modérée. Le diagramme en boîte révèle une distribution symétrique avec une médiane autour de __0.4__ et un intervalle interquartile de __0.25__ à __0.55__, suggérant une répartition homogène des données.
+L'analyse de la quantité de bactéries montre une moyenne de __$0,4389205$__ et une variance de __$0,0684857$__, indiquant une dispersion modérée. Le diagramme en boîte révèle une distribution symétrique avec une médiane autour de __$0,4$__ et un intervalle interquartile de __$0,23$__ à __$0,60$__, suggérant une répartition homogène des données.
 
 ## __4.__
 
-Covariance de $X$ et $Y$ __:__ __$cov(X, Y) = `r cov(data$X, data$Y, method = "pearson")`$__
+Covariance de $X$ et $Y$ __:__ __$cov(X, Y) = −0,7391376$__
 
-La covariance de __$`r cov(data$X, data$Y, method = "pearson")`$__ entre les variables $X$ et $Y$ indique une forte relation inverse, suggérant que lorsque $X$ augmente, $Y$ tend à diminuer, et vice versa. Ce qui correspond a ce que l'on peut observer sur le nuage de points.
+La covariance de __$−0,7391376$__ entre les variables $X$ et $Y$ indique une forte relation inverse, suggérant que lorsque $X$ augmente, $Y$ tend à diminuer, et vice versa. Ce qui correspond a ce que l'on peut observer sur le nuage de points.
 
 ## __5.__
 
@@ -158,15 +159,15 @@ cor.test(data$X, data$Y, method = "pearson")
 
 Calcul des Moindres Carrés Ordinaires : 
 
--  Forme de la droite affine : $\hat{y}=\hat{a}x+\hat{b}$
+-  Forme de la droite affine : $\hat{y}=\hat{a}x+\hat{b} = -0,0835x+0,8565$
 
 -  $\hat{a} = \frac{cov(X, Y)}{Var(X)}$
 
+-  $\hat{a} = -0,0835 = \frac{−0,7391376}{8,850479}$ avec $Var(x) = 8,850479$ et $cov(X, Y) = −0,7391376$
+
 -  $\hat{b} = \overline{y}-\hat{a}\overline{x}$
 
--  $\hat{a} = \frac{−0.7391376}{8.850479}$ avec $Var(x) = `r var(data$X)`$ et $cov(X, Y) = `r cov(data$X, data$Y, method = "pearson")`$
-
--  $\hat{b} = \overline{y}-\hat{a}\overline{x}$ avec $\overline{y}= `r mean(data$Y)`$, $\hat{a} = `r −0.7391376 / 8.850479`$ et $\overline{x}= `r mean(data$X)`$
+-  $\hat{b} = 0,8565 = \overline{y}-\hat{a}\overline{x}$ avec $\overline{y}= 0,4389205$, $\hat{a} = -0,0835$ et $\overline{x}= 5$
 
 ```{r echo=FALSE, fig.align='center'}
 ggplot(data, aes(x = X, y = Y)) +
@@ -181,7 +182,6 @@ ggplot(data, aes(x = X, y = Y)) +
   theme(axis.title = element_text(), text = element_text(family = "Segoe UI", size = 14))
 ```
 
-
 ## __8.__
 
 a faire
@@ -192,30 +192,95 @@ a faire
 LMS <- lm(data$Y ~ data$X)
 summary(LMS)
 ```
+
 expliquer et analyser resultat obtenu avec summary
 
 ## __10.__
 
-
+```{r echo=FALSE}
+deviance(LMS)
+sum(residuals(LMS)^2)
+```
 
 ## __11.__
 
-a\)
+a\) Évaluer l’indépendance des résidus
 
-b\)
+i) 
+
+```{r echo=FALSE}
+residuals <- residuals(LMS)
+acf(residuals, main = "Autocorrélation des résidus")
+```
+
+i)
+
+```{r echo=FALSE}
+dw_test <- dwtest(LMS)
+print(dw_test)
+```
+
+b\) Tester la normalité des résidus
+
+i) 
+
+Shapiro-Wilk
+
+i)
+
+Quantile-Quantile (Q-Q plot)
 
 ## __12.__
 
+$\log{y} = \log{(b.ax)} = \log{b} + x.\log{a}$  
+$\log{y} = \log{(b.ax)} = -0,067277834 + x.-1,078241507$
 
+
+```{r echo=FALSE, fig.align='center'}
+exponential_function <- function(x) {
+  1.0343 * exp(-0.209 * x)
+}
+
+ggplot(data, aes(x = X, y = Y)) +
+  geom_point(color = "red", size = 2) +
+  geom_abline(slope = -0.0835, intercept = 0.8565, color = "blue", linewidth = 1) +
+  stat_function(fun = exponential_function, color = "green", linewidth = 1) +
+  labs(
+    title = "Nuage de points : Dosage vs Bactéries",
+    x = "Dosage de sérum (mL)",
+    y = "Quantité de bactéries (UFC/mL)"
+  ) +
+  theme_fivethirtyeight() +
+  theme(axis.title = element_text(), text = element_text(family = "Segoe UI", size = 14))
+```
 
 ## __13.__
 
+1. 
 
+????
+
+1.
+
+????
 
 ## __14.__
 
-
+$0,1885 = -0,0835\times8+0,8565$
+$0,1943 = 1,0343e^{-0,209\times8}$
 
 ## __Bonus__
 
+?????
 
+## Valeur peut être utile
+
+```{r echo=FALSE}
+var(data$Y)
+var(data$X)
+mean(data$Y)
+mean(data$X)
+cov(data$X, data$Y, method = "pearson")
+median(data$Y)
+quantile(data$Y)
+```
