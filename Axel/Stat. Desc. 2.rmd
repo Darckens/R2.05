@@ -221,30 +221,60 @@ Ainsi, nous pouvons conclure que **la variable `Y` ne suit pas une distribution 
 
 ## __6.__
 
-analyser le coeff de corr
+On sait que le coefficient de corrélation linéaire de Pearson se calcul de la façon suivante :
+
+$$ r(X,Y) = Corr(X,Y) = \frac{Cov(X,Y)}{\sigma_X^2\sigma_Y^2}$$
+Avec R, on trouve : 
 
 ```{r echo=FALSE}
 cor.test(data$X, data$Y, method = "pearson")
 ```
 
+---
+
+Le coefficient de corrélation linéaire de Pearson est de __$-0,9493844$__. Ce coefficient est très proche de -1, ce qui indique une forte corrélation négative entre les deux variables. Cela signifie que $X$ et $Y$ évoluent de manière opposée (comme supposé avec la covariance). Cette relation est donc confirmée par le coefficient de corrélation élevé, qui suggère une forte dépendance linéaire entre les deux variables. 
+<br>
+
 ## __7.__
 
-Calcul des Moindres Carrés Ordinaires : 
+On sait qu'une droite affine s'exprime de la façon suivante : **$y = ax + b$**
 
--  Forme de la droite affine : $\hat{y}=\hat{a}x+\hat{b} = -0,0835x+0,8565$
+Par la méthode de Legendre, aussi appelé méthode des moindres carrés, on peut trouver les coefficients $a$ et $b$ de la droite de régression linéaire qui minimise la somme des carrés des résidus. Autrement dit, on cherche $\hat{a}$ et $\hat{b}$ tels que :
 
--  $\hat{a} = \frac{cov(X, Y)}{Var(X)}$
+$$f(\hat{a},\hat{b}) = \arg\min_{(a,b)}\sum_{i=1}^N(y_i - (ax + b))^2$$ 
+Cela signifie que nous cherchons les valeurs spécifiques de $a$ et $b$ qui rendent la somme des carrés des erreurs aussi petite que possible. D'après le cours de monsieur Hébert.
 
--  $\hat{a} = -0,0835 = \frac{−0,7391376}{8,850479}$ avec $Var(x) = 8,850479$ et $cov(X, Y) = −0,7391376$
 
--  $\hat{b} = \overline{y}-\hat{a}\overline{x}$
+Dans un modèle linéaire, le meilleur coefficient directeur (au sens des moindres carrés) et le meilleur ordonné à l'origine (au sens des moindres carrés) sont :
 
--  $\hat{b} = 0,8565 = \overline{y}-\hat{a}\overline{x}$ avec $\overline{y}= 0,4389205$, $\hat{a} = -0,0835$ et $\overline{x}= 5$
+$$\hat{a} = \frac{cov(X, Y)}{\sigma^2}$$
+**et**
 
+$$\bar{b} = \bar{y} - \hat{a}x $$ 
+
+---
+
+**D'ou** : $$\hat{a} = \frac{-0,7243548}{8,673469} = -0,083513$$
+
+**et**
+
+$$\hat{b} = 0,4389205 - (-0,083513*5) = 0,856489$$ 
+
+--- 
+
+### Récapitulatif
+
+<br>
+$$\begin{cases}
+\hat{a} = 0,083513\\
+\hat{b} = 0,856489
+\end{cases}$$
+
+<br>
 ```{r echo=FALSE, fig.align='center'}
 ggplot(data, aes(x = X, y = Y)) +
   geom_point(color = "red", size = 2) +
-  geom_abline(slope = -0.0835, intercept = 0.8565, color = "blue", linewidth = 1) +
+  geom_abline(slope = -0.083513, intercept = 0.856489, color = "blue", linewidth = 1) +
   labs(
     title = "Nuage de points : Dosage vs Bactéries",
     x = "Dosage de sérum (mL)",
@@ -253,10 +283,11 @@ ggplot(data, aes(x = X, y = Y)) +
   theme_fivethirtyeight() +
   theme(axis.title = element_text(), text = element_text(family = "Segoe UI", size = 14))
 ```
+<br>
 
 ## __8.__
 
-a faire
+à faire...
 
 ## __9.__
 
@@ -330,7 +361,7 @@ ggplot(data, aes(x = X, y = Y)) +
 
 1. 
 
-????
+???? -> $R^2$
 
 1.
 
