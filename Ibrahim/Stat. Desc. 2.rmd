@@ -65,6 +65,7 @@ ggplot(data, aes(x = X, y = Y)) +
   ) +
   theme_fivethirtyeight() +
   theme(axis.title = element_text(), text = element_text(family = "Segoe UI", size = 14))
+
 ```
 <br>
 
@@ -246,7 +247,7 @@ Cela signifie que nous cherchons les valeurs spécifiques de $a$ et $b$ qui rend
 
 Dans un modèle linéaire, le meilleur coefficient directeur (au sens des moindres carrés) et le meilleur ordonné à l'origine (au sens des moindres carrés) sont :
 
-$$\hat{a} = \frac{cov(X, Y)}{\sigma^2_{x}}$$
+$$\hat{a} = \frac{cov(X, Y)}{\sigma^2}$$
 **et**
 
 $$\bar{b} = \bar{y} - \hat{a}x $$ 

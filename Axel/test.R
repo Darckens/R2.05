@@ -61,3 +61,7 @@ grid.arrange(qqX, qqY, ncol = 2)
 
 shapiro.test(data$X)
 shapiro.test(data$Y)
+
+# Coefficient de corrélation ----------------------------------------------
+
+cor.test(data$X, data$Y, method = "pearson")
