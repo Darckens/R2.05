@@ -185,8 +185,8 @@ où :
 
 #### Interprétation des résultats
 
-- Si la **p-valeur** du test est **supérieure à 0.05**, on **ne rejette pas** \(H_0\) : l’échantillon peut être considéré comme **normalement distribué**.
-- Si la **p-valeur** est **inférieure à 0.05**, on **rejette** \(H_0\) : les données **ne suivent pas** une distribution normale.
+- Si la **p-valeur** du test est **supérieure à 0.05**, on **ne rejette pas** $H_0$ : l’échantillon peut être considéré comme **normalement distribué**.
+- Si la **p-valeur** est **inférieure à 0.05**, on **rejette** $H_0$ : les données **ne suivent pas** une distribution normale.
 
 ---
 
@@ -197,22 +197,25 @@ où :
 shapiro.test(data$X)
 shapiro.test(data$Y)
 ```
-<br>
+
+---
 
 #### Variable `X`  
 
-Le test de Shapiro-Wilk appliqué à la variable **`X`** donne une statistique **W = 0.95558** avec une **p-valeur de 0.05809**.  
+Le test appliqué à **`X`** donne une statistique **W = 0.95558** avec une **p-valeur de 0.05809**.
 
-Puisque la **p-valeur est supérieure à 0.05**, nous **ne rejetons pas** l'hypothèse de normalité.  
+Puisque la **p-valeur est supérieure à 0.05**, nous **ne rejetons pas** l'hypothèse de normalité.
+
 Cela signifie que **la variable `X` suit une distribution normale** au seuil de 5%.  
 
 ---
 
 #### Variable `Y`  
 
-Le test de Shapiro-Wilk appliqué à la variable **`Y`** donne une statistique **W = 0.92148** avec une **p-valeur de 0.002668**.  
+Le test appliqué à **`Y`** donne une statistique **W = 0.92148** avec une **p-valeur de 0.002668**.  
 
-Dans ce cas, la **p-valeur est inférieure à 0.05**, nous **rejetons donc** l'hypothèse de normalité.  
+Dans ce cas, la **p-valeur est inférieure à 0.05**, nous **rejetons donc** l'hypothèse de normalité. 
+
 Ainsi, nous pouvons conclure que **la variable `Y` ne suit pas une distribution normale**.  
 
 
