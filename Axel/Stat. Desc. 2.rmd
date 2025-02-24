@@ -53,8 +53,7 @@ Reprsentation du nuage de points de la statistique bi-variée ($x_{i};y_{i}$) :
 
 <br>
 ```{r echo=FALSE, fig.align='center'}
-
-data <- read.csv("../donnees_r.csv", header = TRUE,  sep = ",", colClasses = c("numeric", "numeric"))
+data <- read.csv("../donnees_r.csv", header = TRUE, sep = ",", colClasses = c("numeric", "numeric"))
 
 ggplot(data, aes(x = X, y = Y)) +
   geom_point(color = "red", size = 2) +
@@ -65,7 +64,6 @@ ggplot(data, aes(x = X, y = Y)) +
   ) +
   theme_fivethirtyeight() +
   theme(axis.title = element_text(), text = element_text(family = "Segoe UI", size = 14))
-
 ```
 <br>
 
@@ -91,6 +89,7 @@ ggplot(data, aes(y = Y)) +
   theme_fivethirtyeight() +
   theme(text = element_text(family = "Segoe UI", size = 14))
 ```
+
 
 <br>
 
