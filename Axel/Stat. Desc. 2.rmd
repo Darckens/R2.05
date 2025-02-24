@@ -156,7 +156,7 @@ La variable **$Y$ ne semble pas suivre une distribution normale**.
 ### b\) Etude numérique Shapiro-Wilk
 
 <br>
-Le **test de Shapiro-Wilk** est un test statistique permettant d’évaluer si un échantillon suit une **distribution normale**. Il est particulièrement efficace pour les **petites tailles d’échantillon** (\(n \leq 50\)), bien qu'il puisse être utilisé sur des ensembles de données plus grands.
+Le **test de Shapiro-Wilk** est un test statistique permettant d’évaluer si un échantillon suit une **distribution normale**. Il est particulièrement efficace pour les **petites tailles d’échantillon** ($n \leq 50$), bien qu'il puisse être utilisé sur des ensembles de données plus grands.
 
 ---
 
@@ -164,8 +164,8 @@ Le **test de Shapiro-Wilk** est un test statistique permettant d’évaluer si u
 
 <br>
 
-- **\(H_0\) (Hypothèse nulle) :** Les données suivent une distribution normale.
-- **\(H_1\) (Hypothèse alternative) :** Les données ne suivent pas une distribution normale.
+- **$H_0$ (Hypothèse nulle) :** Les données suivent une distribution normale.
+- **$H_1$ (Hypothèse alternative) :** Les données ne suivent pas une distribution normale.
 
 ---
 
@@ -173,15 +173,13 @@ Le **test de Shapiro-Wilk** est un test statistique permettant d’évaluer si u
 
 La statistique du test de Shapiro-Wilk est définie comme suit :
 
-\[
-W = \frac{\left( \sum_{i=1}^{n} a_i x_{(i)} \right)^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2}
-\]
+$$W = \frac{( \sum_{i=1}^{n} a_i x_{(i)} )^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2} $$
 
 où :
 
-- \( x_{(i)} \) sont les valeurs de l’échantillon classées par ordre croissant.
-- \( \bar{x} \) est la **moyenne** de l’échantillon.
-- \( a_i \) sont des coefficients calculés à partir des quantiles d'une distribution normale.
+- $x_{(i)}$ sont les valeurs de l’échantillon classées par ordre croissant.
+- $\bar{x}$ est la **moyenne** de l’échantillon.
+- $a_i$ sont des coefficients calculés à partir des quantiles d'une distribution normale.
 
 ---
 
