@@ -37,6 +37,7 @@ loadfonts()
 
 ## __1.__\
 
+<br>
 Tout d'abord, qu'est-ce qu'une variable explicative et une variable expliquée ?
 
 -   Une variable explicative est la variable qui permet d'expliquer une autre variable. Elle est souvent notée $X$. Sur une représentation graphique, la variable explicative est représentée en abscisse.
@@ -44,14 +45,16 @@ Tout d'abord, qu'est-ce qu'une variable explicative et une variable expliquée ?
 -   Une variable expliquée est la variable pour laquelle on cherche un modèle de prévision. Son évolution dépend d'une ou de plusieurs autres variables. Elle est souvent notée $Y$. Sur une représentation graphique, la variable expliquée est représentée en ordonnée.\
 
 Ainsi, dans le cadre de notre exercice, la variable explicative est le **dosage de sérum X (en mL)**. Et la variable expliquée est la **quantité de bactéries Y (en UFC/mL)**, car c'est celle qui est mesurée en fonction du dosage de sérum et qui dépend potentiellement de $X$.\
+<br>
 
 ## __2.__\
 
-Représentation du nuage de points de la statistique bi-variée ($x_{i};y_{i}$)\
+Reprsentation du nuage de points de la statistique bi-variée ($x_{i};y_{i}$) :
 
+<br>
 ```{r echo=FALSE, fig.align='center'}
 
-data <- read.csv("../donnees_r.csv", header = TRUE, colClasses = c("numeric", "numeric"))
+data <- read.csv("../donnees_r.csv", header = TRUE,  sep = ",", colClasses = c("numeric", "numeric"))
 
 ggplot(data, aes(x = X, y = Y)) +
   geom_point(color = "red", size = 2) +
@@ -64,21 +67,23 @@ ggplot(data, aes(x = X, y = Y)) +
   theme(axis.title = element_text(), text = element_text(family = "Segoe UI", size = 14))
 
 ```
-
-
+<br>
 
 ## __3.__\
 
-a\) Calcul de la moyenne et de la variance de la quantité de bactéries
+### a\) Calcul de la moyenne et de la variance de la quantité de bactéries
 
-- Moyenne : __$\overline{y} = 0,4389205$__  
+<br>
 
-- Variance : __$Var(y) = 0,0684857$__
+- Moyenne : __$\overline{y} = 0,4389205$__
 
-<br>   
+- Variance : __$\sigma^2 = 0,0671159$__
 
-b\) Box-plot de la dsitribution de la variable : __Quantité de bactéries__
+<br>
 
+### b\) Box-plot de la dsitribution de la variable : __Quantité de bactéries__
+
+<br>
 ```{r echo=FALSE, fig.align='center'}
 ggplot(data, aes(y = Y)) +
   geom_boxplot() +
@@ -89,46 +94,25 @@ ggplot(data, aes(y = Y)) +
 
 <br>
 
-c\) Analyse des résultats obtenus
+### c\) Analyse des résultats obtenus
 
-L'analyse de la quantité de bactéries montre une moyenne de __$0,4389205$__ et une variance de __$0,0684857$__, indiquant une dispersion modérée. Le diagramme en boîte révèle une distribution symétrique avec une médiane autour de __$0,4$__ et un intervalle interquartile de __$0,23$__ à __$0,60$__, suggérant une répartition homogène des données.
+L'analyse de la quantité de bactéries montre une moyenne de __$0,4389205$__ et une variance de __$0,0671159$__, indiquant une dispersion modérée. Le diagramme en boîte révèle une distribution symétrique avec une médiane autour de __$0,4$__ et un intervalle interquartile de __$0,23$__ à __$0,60$__, suggérant une répartition homogène des données.
 
 ## __4.__
 
 Nous savons que la Covariance de $X$ et $Y$ est : $$Cov(X,Y) = \frac{1}{N}\sum_{i=1}^{i=N}(X_i - \overline{X})(Y_i - \overline{Y}) = (\frac{1}{N}\sum_{i=1}^{i=N}(X_iY_i)) - \overline{X}\overline{Y}$$\
 
-On trouve donc : __$Cov(X, Y) = −0,7391376$__\
+On trouve donc : __$Cov(X, Y) = -0,7243548$__\
 
-La covariance entre les deux variables étant de __$−0,7391376$__, cela indique une assez forte relation. Le signe étant négative, cela  indique que $X$ et $Y$ évoluent de manière opposé. Autrement dit, lorsque $X$ augmente, $Y$ quant à lui à diminuer, et inversement. Ce qui coincide avec l'observation faite ci-dessus, dans le nuage de point.
+La covariance entre les deux variables étant de __$-0,7243548$__, cela indique une assez forte relation. Le signe étant négative, cela  indique que $X$ et $Y$ évoluent de manière opposé. Autrement dit, lorsque $X$ augmente, $Y$ quant à lui à diminuer, et inversement. Ce qui coincide avec l'observation faite ci-dessus, dans le nuage de point.
 
 ## __5.__
 
-Parler des deux etapes
+Les Q-Q plots (Quantile-Quantile plots) permettent de comparer les quantiles d'une variable observée à ceux d'une distribution théorique, souvent la distribution normale. En examinant l'alignement des points sur une droite diagonale, il est possible d'évaluer visuellement si une variable suit une distribution normale.
 
-a\) Etude graphique Quantile-Quantile (jsp si faut en faire 2 ou un, je trouve que en 2 en 1 la variable Y on voit pas de fou)
-
-Version avec les deux sur le meme graph
-
-```{r echo=FALSE, fig.align='center'}
-# Les deux graphiques combiné
-
-ggplot(data) +
-  geom_qq(aes(sample = X, color = "X"), geom = "point", position = "identity") +
-  geom_qq(aes(sample = Y, color = "Y"), geom = "point", position = "identity") +
-  labs(title = "Q-Q Plot de X et Y", color = "Variable :") +
-  scale_color_manual(values = c("X" = "red", "Y" = "blue")) +
-  theme_fivethirtyeight() +
-  theme(text = element_text(family = "Segoe UI", size = 14))
-```
-
-Nous pouvons observer que la variable $Y$ a l'air de suivre une distribution normale. En effet, les points sont gloabelement alignés.\
-
-Cependant, pour $X$, c'est tout l'inverse ! Pour une distribution normale, de manière graphique (avec Q-Q Plot), nous nous attendons à voir une droite se déssiner. Or, ici, on observe une courbure marquée, montrant ainsi que $X$ ne suit pas une distribution normale.
+### a\) Etude graphique Quantile-Quantile
 
 <br>
-
-Version avec les deux graph séparé
-
 ```{r echo=FALSE, fig.align='center'}
 qqX <- ggplot(data) +
   geom_qq(aes(sample = X), geom = "point", position = "identity") +
@@ -144,17 +128,96 @@ qqY <- ggplot(data) +
 
 grid.arrange(qqX, qqY, ncol = 2)
 ```
+<br>
+
+#### Interprétation du Q-Q Plot pour la variable `X`
+
+- **Alignement des points** :  
+  Les points du Q-Q plot de **$X$** sont quasiment alignés sur la droite diagonale. Cela suggère que les quantiles observés de **$X$** correspondent étroitement aux quantiles théoriques d'une distribution normale.
+
+- **Extrémités (queues de distribution)** :  
+  Les points situés aux extrémités ne s'écartent pas significativement de la droite, ce qui renforce l'idée que **$X$** présente les caractéristiques d'une distribution normale.
+
+La variable **$X$ semble être normalement distribuée.**
+
+---
+
+#### Interprétation du Q-Q Plot pour la variable `Y`
+
+- **Écart par rapport à la diagonale** :  
+  Pour la variable **$Y$**, les points du Q-Q plot ne suivent pas la droite diagonale. On observe une courbure, surtout aux extrémités, indiquant que les quantiles observés ne correspondent pas aux quantiles attendus pour une distribution normale.
+
+- **Queues de distribution** :  
+  Les écarts importants aux extrémités suggèrent que **$Y$** possède des caractéristiques non conformes à la normalité, telles qu'une asymétrie ou des queues de distribution différentes de celles d'une loi normale.
+
+La variable **$Y$ ne semble pas suivre une distribution normale**.
+
+
+### b\) Etude numérique Shapiro-Wilk
+
+<br>
+Le **test de Shapiro-Wilk** est un test statistique permettant d’évaluer si un échantillon suit une **distribution normale**. Il est particulièrement efficace pour les **petites tailles d’échantillon** (\(n \leq 50\)), bien qu'il puisse être utilisé sur des ensembles de données plus grands.
+
+---
+
+#### Hypothèses du test
 
 <br>
 
-b\) Etude numérique Shapiro-Wilk
+- **\(H_0\) (Hypothèse nulle) :** Les données suivent une distribution normale.
+- **\(H_1\) (Hypothèse alternative) :** Les données ne suivent pas une distribution normale.
 
-en parler
+---
 
+#### Formule du test
+
+La statistique du test de Shapiro-Wilk est définie comme suit :
+
+\[
+W = \frac{\left( \sum_{i=1}^{n} a_i x_{(i)} \right)^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2}
+\]
+
+où :
+
+- \( x_{(i)} \) sont les valeurs de l’échantillon classées par ordre croissant.
+- \( \bar{x} \) est la **moyenne** de l’échantillon.
+- \( a_i \) sont des coefficients calculés à partir des quantiles d'une distribution normale.
+
+---
+
+#### Interprétation des résultats
+
+- Si la **p-valeur** du test est **supérieure à 0.05**, on **ne rejette pas** \(H_0\) : l’échantillon peut être considéré comme **normalement distribué**.
+- Si la **p-valeur** est **inférieure à 0.05**, on **rejette** \(H_0\) : les données **ne suivent pas** une distribution normale.
+
+---
+
+#### Résultats du code R
+
+<br>
 ```{r echo=FALSE}
 shapiro.test(data$X)
 shapiro.test(data$Y)
 ```
+<br>
+
+#### Variable `X`  
+
+Le test de Shapiro-Wilk appliqué à la variable **`X`** donne une statistique **W = 0.95558** avec une **p-valeur de 0.05809**.  
+
+Puisque la **p-valeur est supérieure à 0.05**, nous **ne rejetons pas** l'hypothèse de normalité.  
+Cela signifie que **la variable `X` suit une distribution normale** au seuil de 5%.  
+
+---
+
+#### Variable `Y`  
+
+Le test de Shapiro-Wilk appliqué à la variable **`Y`** donne une statistique **W = 0.92148** avec une **p-valeur de 0.002668**.  
+
+Dans ce cas, la **p-valeur est inférieure à 0.05**, nous **rejetons donc** l'hypothèse de normalité.  
+Ainsi, nous pouvons conclure que **la variable `Y` ne suit pas une distribution normale**.  
+
+
 ## __6.__
 
 analyser le coeff de corr
