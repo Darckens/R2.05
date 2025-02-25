@@ -49,7 +49,7 @@ Ainsi, dans le cadre de notre exercice, la variable explicative est le **dosage 
 
 ## __2.__\
 
-Reprsentation du nuage de points de la statistique bi-variée ($x_{i};y_{i}$) :
+Représentation du nuage de points de la statistique bi-variée ($x_{i};y_{i}$) :
 
 <br>
 ```{r echo=FALSE, fig.align='center'}
@@ -175,7 +175,7 @@ La statistique du test de Shapiro-Wilk est définie comme suit :
 
 $$W = \frac{( \sum_{i=1}^{n} a_i x_{(i)} )^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2} $$
 
-où :
+**où** :
 
 - $x_{(i)}$ sont les valeurs de l’échantillon classées par ordre croissant.
 - $\bar{x}$ est la **moyenne** de l’échantillon.
@@ -192,7 +192,6 @@ où :
 
 #### Résultats du code R
 
-<br>
 ```{r echo=FALSE}
 shapiro.test(data$X)
 shapiro.test(data$Y)
@@ -252,9 +251,74 @@ $$\hat{a} = \frac{cov(X, Y)}{\sigma^2}$$
 
 $$\bar{b} = \bar{y} - \hat{a}x $$ 
 
+### **Démonstration** 
+
+$$\frac{\partial f}{\partial a} = \sum_{i=1}^N (2*(y_i - ax_i -n)(-x_i))$$
+<br>
+
+$$\frac{\partial f}{\partial b} = \sum_{i=1}^N (2*(y_i - ax_i -n)(-1))$$
+<br>
+
+**On cherche :** $~~ \frac{\partial f}{\partial a} = 0~~$ et  $~~ \frac{\partial f}{\partial b} = 0~~$
+
+<br>
+
+D’où le système suivant :
+
+$\begin{cases}
+\sum 2(y_i - ax_i - n)(-x_i) = 0\\
+\sum 2(y_i - ax_i - n)(-1) = 0
+\end{cases}
+~ ~ 
+\xrightarrow[L_2 \leftarrow L_2 \cdot \frac{1}{2}]{L_1 \leftarrow L_1 \cdot \frac{1}{2}}
+~ ~
+\begin{cases}
+\sum (y_i - ax_i - n)(-x_i) = 0\\
+\sum (y_i - ax_i - n)(-1) = 0
+\end{cases}
+~ ~
+\xrightarrow[L_2 \leftarrow L_2 \cdot \frac{1}{N}]{L_1 \leftarrow L_1 \cdot \frac{1}{N}}
+~ ~
+\begin{cases}
+\overline{(y - ax - b)x} = 0\\
+\overline{y - ax - b} = 0
+\end{cases}
+~ ~
+\longrightarrow
+~ ~
+\begin{cases}
+\overline{xy} - a\bar{x^2} - b\bar{x} = 0\\
+\bar{y} - a\bar{x} - b = 0
+\end{cases}
+~ ~
+\xrightarrow{L_2 \leftarrow L_2 \cdot \bar{x}}
+~ ~
+\begin{cases}
+\overline{xy} - a\bar{x^2} - b\bar{x} = 0\\
+\bar{x} \bar{y} - a\bar{x}^2 - b\bar{x} = 0
+\end{cases}
+~ ~
+\xrightarrow{L_1 - L_2}
+~ ~
+(\overline{xy} - \bar{x} \bar{y}) - a(\bar{x^2} - \bar{x}^2) = 0
+~ ~
+\longrightarrow
+~ ~ 
+Cov(X,Y) - a\sigma_X^2 = 0$
+
+<bar>
+
+**D'ou** :
+
+$\hat{a} = \frac{cov(X, Y)}{\sigma^2} ~~~$ et $~~~\bar{b} = \bar{y} - \hat{a}x$ 
+
 ---
 
-**D'ou** : $$\hat{a} = \frac{-0,7243548}{8,673469} = -0,083513$$
+### Applications 
+
+<br> 
+
+$$\hat{a} = \frac{-0,7243548}{8,673469} = -0,083513$$
 
 **et**
 
@@ -268,7 +332,8 @@ $$\hat{b} = 0,4389205 - (-0,083513*5) = 0,856489$$
 $$\begin{cases}
 \hat{a} = 0,083513\\
 \hat{b} = 0,856489
-\end{cases}$$
+\end{cases}
+~ ~ \Longrightarrow  ~ ~ ~ \hat{y} ~ = ~ -0,083513x ~ + ~ 0,856489$$
 
 <br>
 ```{r echo=FALSE, fig.align='center'}
@@ -287,16 +352,58 @@ ggplot(data, aes(x = X, y = Y)) +
 
 ## __8.__
 
-à faire...
+En observant le nuage de points, on voit clairement que lorsque le dosage de sérum augmente, la quantité de bactéries diminue de manière régulière. La droite de régression, qui semble passer naturellement au milieu de ces données, reflète bien cette tendance. Cette modélisation linéaire nous paraît être une première approximation logique et cohérente, en accord avec l'idée que l'augmentation du dosage se traduit par une diminution de la concentration bactérienne. L'ajustement linéaire offre ici une représentation intuitive et satisfaisante de la relation observée.
 
 ## __9.__
 
 ```{r echo=FALSE}
 LMS <- lm(data$Y ~ data$X)
 summary(LMS)
+
+#plot(summary(LMS)$residuals, main = "Distribution des résidus", ylab = "Résidus", xlab = "Observations")
+#abline(h = 0, col = "red", lwd = 2)
+
 ```
 
-expliquer et analyser resultat obtenu avec summary
+---
+
+### Test de significativité globale du modèle
+
+Avant d'interpréter les résultats, il convient d'évaluer la significativité du modèle. Il désigne le seuil à partir duquel les résultats d'un test sont jugés fiables. Autrement dit, ce seuil détermine la confiance dans la corrélation entre un test effectué et les résultats obtenus.
+
+Soit : $H_0$ -> le modèle n'est pas significatif 
+
+Ce test est basé sur la **statistique de Fisher** présentée en bas de la sortie R. La p-valeur associée à cette statistique est de **`2e-16`**. Puisque cette valeur est **inférieure à 1%**, nous **rejetons l'hypothèse nulle**, à savoir le modèle est bien **globalement significatif**
+
+---
+
+### Interprétation des coefficients
+
+Les coefficients permettent de comprendre comment la variable explicative $X$ influence la variable dépendante $Y$.
+
+**`(Intercept)`** qui est dans notre cas $~\hat{b}~$ (que nous allons appelé $~\beta_0$), est de **0.85649**. Et **`data$X`** qui est $~\hat{a}~$ (que nous allons appelé $~\beta_1$), est de **-0.08351**. Ces valeurs correspondent à celles que nous avons calculées précédemment.
+
+Les **`Pr(>|t|)`** sont les **`p-valeurs`** associées à chaque coefficient. Elles permettent de tester **l'hypothèse nulle** $H_0$ suivante : 
+
+- $H_0 : \beta_i = 0 ~$ -> Cela signifie que $X$ n'a aucun effet sur $Y$
+
+Or, ici les **p-valeurs sont très faibles** (**`2e-16`**), ce qui signifie que nous **rejetons l'hypothèse nulle**. Donc **les coefficients sont significatifs** et que la variable explicative $X$ a un effet significatif sur la variable dépendante $Y$. 
+
+De plus, dans R la signification des coefficients est indiquée avec des étoiles. Ici nous avons **3 étoiles** (**`***`**), ce qui signifie que les coefficients sont très significatifs.
+
+---
+
+### Residuals 
+
+Nous avons un **minimum à -0.12653** et un **maximum à 0.16835**. Ces valeurs montrent que les résidus restent dans un **intervalle restreint**. Cela signifie que le modèle fait des **erreurs relativement petites** et que ses **prédictions sont assez précises**.
+
+De plus, **la médiane des résidus est proche de 0**, ce qui indique que le modèle est **équilibré** et que les erreurs sont réparties de manière homogène autour de la droite de régression. 
+
+---
+
+### Multiple R-squared
+
+Le coefficient de détermination $R^2$ est de **0.9013**. Cela signifie que **90.13% de la variance de la variable dépendante $Y$ est expliquée par la variable explicative $X$**. Ce coefficient est très élevé, ce qui indique que le modèle linéaire est **très performant** pour prédire la quantité de bactéries en fonction du dosage de sérum.
 
 ## __10.__
 
