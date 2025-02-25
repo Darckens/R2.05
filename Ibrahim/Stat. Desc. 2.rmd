@@ -5,6 +5,8 @@ date: "2025-02-21"
 output:
   html_document:
     df_print: paged
+  pdf_document: default
+  word_document: default
 lang: fr
 ---
 
@@ -165,7 +167,6 @@ Le **test de Shapiro-Wilk** est un test statistique permettant d’évaluer si u
 <br>
 
 - **$H_0$ (Hypothèse nulle) :** Les données suivent une distribution normale.
-- **$H_1$ (Hypothèse alternative) :** Les données ne suivent pas une distribution normale.
 
 ---
 
@@ -407,38 +408,143 @@ Le coefficient de détermination $R^2$ est de **0.9013**. Cela signifie que **90
 
 ## __10.__
 
+On sait que : 
+
+$$SCR = \sum_{i=1}^n(\hat{y}- \bar{y})^2$$ 
+
+A l'aide de R, on trouve :
+
 ```{r echo=FALSE}
 deviance(LMS)
 sum(residuals(LMS)^2)
 ```
+<br>
+
+$$SCR = 0.3311143$$
+
+---
+
+### Interprétation
+
+Plus la $SCR$ est faible, plus le modèle est performant. Dans notre cas, la $SCR$ est de **0.3311143**, ce qui indique que le modèle linéaire explique une grande partie de la variance de la variable dépendante $Y$. Cela confirme la pertinence du modèle pour prédire la quantité de bactéries en fonction du dosage de sérum.
+
 
 ## __11.__
 
-a\) Évaluer l’indépendance des résidus
+<br>
 
-i) 
+### a\) Évaluer l'indépendance des résidus
+
+<br>
+
+#### ii\) 
+
+<br>
 
 ```{r echo=FALSE}
 residuals <- residuals(LMS)
 acf(residuals, main = "Autocorrélation des résidus")
 ```
 
-i)
+#### ii\)
+
+<br>
+
+Le test de Durbin-Watson (DW) est un test statistique utilisé en régression linéaire pour détecter l’autocorrélation des erreurs (résidus) dans un modèle. Autrement dit, il permet de vérifier si les résidus sont indépendants les uns des autres.
+
+A l'aide de R, on obtient :
 
 ```{r echo=FALSE}
 dw_test <- dwtest(LMS)
 print(dw_test)
 ```
 
-b\) Tester la normalité des résidus
+Avant de commencer, dans ce test, il est fait l'hypothèse suivante : 
 
-i) 
+- $H_0$ : Les erreurs (résidus) ne sont pas autocorrélées. Autrement dit, elles sont indépendantes les unes des autres
 
-Shapiro-Wilk
+---
 
-i)
+##### **Comment interpréter les résultats ?**
 
-Quantile-Quantile (Q-Q plot)
+Statistique de Durbin-Watson (DW) :
+
+- Si **`DW`** est proche de **2**, cela signifie qu'il n'y a pas d'autocorrélation. 
+- Si **`DW`** proche de 0, cela indique une forte autocorrélation positive des résidus.
+- Si **`DW`** proche de 4, cela indique une forte autocorrélation négative des résidus.
+
+---
+
+Nous trouvons un **`DW` de 0.61628**. Cette valeur est **inférieure à 2**, ce qui suggère une **forte autocorrélation positive des résidus**.
+
+De plus, la **`p-value`** associée à ce test est de **1.655e-09**, ce qui est **inférieur à 0.05**. Nous **rejetons donc l'hypothèse nulle** $H_0$ et concluons que les résidus ne sont pas indépendants les uns des autres.
+
+Cette fois-ci, nous avons en plus **`alternative hypothesis`** qui est une hypothèse alternative. Celle-ci est **`positive`**, ce qui signifie que les résidus sont **positivement autocorrélés**.
+
+---
+
+##### **Conclusion général :**
+
+Les résidus du modèle de régression linéaire ne sont pas indépendants les uns des autres. Il existe une forte autocorrélation positive entre les résidus.
+
+<br>
+
+### b\) Tester la normalité des résidus
+
+<br>
+
+#### i\) 
+
+<br>
+
+Pour rappel, nous faisons l'hypothèse suivante :
+
+- **$H_0$ (Hypothèse nulle) :** Les données suivent une distribution normale.
+
+A l'aide de R, on obtient :
+```{r echo=FALSE}
+shapiro.test(residuals(LMS))
+```
+
+---
+
+Le test appliqué aux résidus donne une statistique **`W` = 0.95739** avec une **p-valeur de 0.06909.**
+
+Puisque **la p-valeur est supérieure à 0.05**, nous **ne rejetons pas l’hypothèse** de normalité.
+
+Cela signifie que **les résidus `(SCR)` suivent une distribution normale** au seuil de 5%.
+
+<br>
+
+#### i\)
+
+```{r echo=FALSE, fig.align='center'}
+
+# Diagramme Quantile-Quantile (Q-Q plot) :
+
+qqnorm(residuals, main = "Q-Q Plot des résidus")
+qqline(residuals, col = "red")
+```
+
+---
+
+##### **Interprétation du Q-Q Plot**
+
+- **Alignement des points** :  
+  Les points du Q-Q plot des **résidus** sont quasiment alignés sur la droite diagonale (celle tracée en rouge). Cela suggère que les quantiles observés des **résidus** correspondent étroitement aux quantiles théoriques d’une distribution normale.
+
+- **Extrémités (queues de distribution) :**  
+  Les points situés aux extrémités ne s’écartent pas significativement de la droite, ce qui renforce l’idée que les **résidus** présente les caractéristiques d’une distribution normale.
+
+Les **résidus semblent donc être normalement distribué.**
+
+---
+
+##### **Conclusion générale**
+
+<br>
+
+Le test de **Shapiro-Wilk** et le **Q-Q plot** des résidus indiquent que ces derniers suivent une **distribution normale**. Cela confirme que les résidus du modèle de régression linéaire sont bien distribués selon une **loi normale**.
 
 ## __12.__
 
@@ -468,11 +574,30 @@ ggplot(data, aes(x = X, y = Y)) +
 
 1. 
 
-???? -> $R^2$
+On sait que : $$R^2 = \frac{SCE}{SCT}$$ 
 
-1.
+Pour allé plus vite, utilisons R :
 
-????
+```{r echo=FALSE}
+
+# Pour le modèle linéaire classique
+
+summary(LMS)$r.squared
+
+```
+
+
+2.
+
+```{r echo=FALSE}
+
+# Pour le modèle exponentiel
+
+exponential_model <- lm(log(Y) ~ X, data = data)
+
+summary(exponential_model)$r.squared
+
+```
 
 ## __14.__
 
