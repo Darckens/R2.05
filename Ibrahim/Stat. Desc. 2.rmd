@@ -679,7 +679,6 @@ $$
  y = e^B \cdot e^{Ax}
 $$
 
-ce qui correspond au modèle exponentiel ajusté que nous retrouvons dans R après estimation des coefficients.
 
 ### **Conclusion**
 
