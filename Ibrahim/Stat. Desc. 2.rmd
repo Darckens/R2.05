@@ -77,6 +77,17 @@ ggplot(data, aes(x = X, y = Y)) +
 
 <br>
 
+```{r echo=FALSE }
+
+var_X_pearson <- var(data$Y) * (nrow(data) - 1) / nrow(data)
+
+cat("Moyenne de la quantité de bactéries : ", mean(data$Y), "\n")
+cat("Variance de la quantité de bactéries : ", var_X_pearson)
+
+```
+
+---
+
 - Moyenne : __$\overline{y} = 0,4389205$__
 
 - Variance : __$\sigma^2 = 0,0671159$__
@@ -102,7 +113,17 @@ L'analyse de la quantité de bactéries montre une moyenne de __$0,4389205$__ et
 
 ## __4.__
 
-Nous savons que la Covariance de $X$ et $Y$ est : $$Cov(X,Y) = \frac{1}{N}\sum_{i=1}^{i=N}(X_i - \overline{X})(Y_i - \overline{Y}) = (\frac{1}{N}\sum_{i=1}^{i=N}(X_iY_i)) - \overline{X}\overline{Y}$$\
+Nous savons que la Covariance de $X$ et $Y$ est : $$Cov(X,Y) = \frac{1}{N}\sum_{i=1}^{i=N}(X_i - \overline{X})(Y_i - \overline{Y}) = (\frac{1}{N}\sum_{i=1}^{i=N}(X_iY_i)) - \overline{X}\overline{Y}$$
+
+---
+
+```{r echo=FALSE }
+
+cat("Covariance entre X et Y : ", cov(data$X, data$Y, method = "pearson"))
+
+```
+
+---
 
 On trouve donc : __$Cov(X, Y) = -0,7243548$__\
 
@@ -237,85 +258,117 @@ Le coefficient de corrélation linéaire de Pearson est de __$-0,9493844$__. Ce 
 
 ## __7.__
 
+# Introduction
 On sait qu'une droite affine s'exprime de la façon suivante : **$y = ax + b$**
 
-Par la méthode de Legendre, aussi appelé méthode des moindres carrés, on peut trouver les coefficients $a$ et $b$ de la droite de régression linéaire qui minimise la somme des carrés des résidus. Autrement dit, on cherche $\hat{a}$ et $\hat{b}$ tels que :
+Par la méthode de Legendre, aussi appelée méthode des moindres carrés, on peut trouver les coefficients $a$ et $b$ de la droite de régression linéaire qui minimise la somme des carrés des résidus. Autrement dit, on cherche $\hat{a}$ et $\hat{b}$ tels que :
 
 $$f(\hat{a},\hat{b}) = \arg\min_{(a,b)}\sum_{i=1}^N(y_i - (ax + b))^2$$ 
-Cela signifie que nous cherchons les valeurs spécifiques de $a$ et $b$ qui rendent la somme des carrés des erreurs aussi petite que possible. D'après le cours de monsieur Hébert.
 
+Cela signifie que nous cherchons les valeurs spécifiques de $a$ et $b$ qui rendent la somme des carrés des erreurs aussi petite que possible.
 
-Dans un modèle linéaire, le meilleur coefficient directeur (au sens des moindres carrés) et le meilleur ordonné à l'origine (au sens des moindres carrés) sont :
+Dans un modèle linéaire, le meilleur coefficient directeur (au sens des moindres carrés) et la meilleure ordonnée à l'origine (au sens des moindres carrés) sont :
 
-$$\hat{a} = \frac{cov(X, Y)}{\sigma^2}$$
+$$
+\hat{a} = \frac{\text{Cov}(X, Y)}{\sigma^2}
+$$
 **et**
 
-$$\bar{b} = \bar{y} - \hat{a}x $$ 
+$$
+\bar{b} = \bar{y} - \hat{a}x 
+$$
 
-### **Démonstration** 
+# Démonstration
 
-$$\frac{\partial f}{\partial a} = \sum_{i=1}^N (2*(y_i - ax_i -n)(-x_i))$$
-<br>
+$$
+\frac{\partial f}{\partial a} = \sum_{i=1}^N (2*(y_i - ax_i -b)(-x_i))
+$$
 
-$$\frac{\partial f}{\partial b} = \sum_{i=1}^N (2*(y_i - ax_i -n)(-1))$$
-<br>
+$$
+\frac{\partial f}{\partial b} = \sum_{i=1}^N (2*(y_i - ax_i -b)(-1))
+$$
 
 **On cherche :** $~~ \frac{\partial f}{\partial a} = 0~~$ et  $~~ \frac{\partial f}{\partial b} = 0~~$
 
-<br>
-
 D’où le système suivant :
 
-$\begin{cases}
-\sum 2(y_i - ax_i - n)(-x_i) = 0\\
-\sum 2(y_i - ax_i - n)(-1) = 0
-\end{cases}
-~ ~ 
-\xrightarrow[L_2 \leftarrow L_2 \cdot \frac{1}{2}]{L_1 \leftarrow L_1 \cdot \frac{1}{2}}
-~ ~
+$$
 \begin{cases}
-\sum (y_i - ax_i - n)(-x_i) = 0\\
-\sum (y_i - ax_i - n)(-1) = 0
+\sum 2(y_i - ax_i - b)(-x_i) = 0\\
+\sum 2(y_i - ax_i - b)(-1) = 0
 \end{cases}
-~ ~
-\xrightarrow[L_2 \leftarrow L_2 \cdot \frac{1}{N}]{L_1 \leftarrow L_1 \cdot \frac{1}{N}}
-~ ~
+$$
+
+En divisant par 2 :
+
+$$
+\begin{cases}
+\sum (y_i - ax_i - b)(-x_i) = 0\\
+\sum (y_i - ax_i - b)(-1) = 0
+\end{cases}
+$$
+
+En divisant par $N$ :
+
+$$
 \begin{cases}
 \overline{(y - ax - b)x} = 0\\
 \overline{y - ax - b} = 0
 \end{cases}
-~ ~
-\longrightarrow
-~ ~
+$$
+
+Ce qui donne :
+
+$$
 \begin{cases}
 \overline{xy} - a\bar{x^2} - b\bar{x} = 0\\
 \bar{y} - a\bar{x} - b = 0
 \end{cases}
-~ ~
-\xrightarrow{L_2 \leftarrow L_2 \cdot \bar{x}}
-~ ~
+$$
+
+Multiplication de la seconde équation par $\bar{x}$ :
+
+$$
 \begin{cases}
 \overline{xy} - a\bar{x^2} - b\bar{x} = 0\\
 \bar{x} \bar{y} - a\bar{x}^2 - b\bar{x} = 0
 \end{cases}
-~ ~
-\xrightarrow{L_1 - L_2}
-~ ~
+$$
+
+Soustraction des deux équations :
+
+$$
 (\overline{xy} - \bar{x} \bar{y}) - a(\bar{x^2} - \bar{x}^2) = 0
-~ ~
-\longrightarrow
-~ ~ 
-Cov(X,Y) - a\sigma_X^2 = 0$
+$$
 
-<bar>
+Ce qui donne :
 
-**D'ou** :
+$$
+\text{Cov}(X,Y) - a\sigma_X^2 = 0
+$$
 
-$\hat{a} = \frac{cov(X, Y)}{\sigma^2} ~~~$ et $~~~\bar{b} = \bar{y} - \hat{a}x$ 
+D'où :
+
+$$
+\hat{a} = \frac{\text{Cov}(X, Y)}{\sigma^2} ~~~ \text{et} ~~~ \bar{b} = \bar{y} - \hat{a}x
+$$
+
 
 ---
 
 ### Applications 
+
+```{r}
+
+covariance <- cov(data$X, data$Y, method = "pearson")
+variance_X <- var(data$X)
+
+a <- covariance / variance_X
+b <- mean(data$Y) - a * mean(data$X)
+
+cat("a =", a, "b =", b)
+```
+
 
 <br> 
 
@@ -548,13 +601,115 @@ Le test de **Shapiro-Wilk** et le **Q-Q plot** des résidus indiquent que ces de
 
 ## __12.__
 
-$\log{y} = \log{(b.ax)} = \log{b} + x.\log{a}$  
-$\log{y} = \log{(b.ax)} = -0,067277834 + x.-1,078241507$
+### **Un peu de mathématiques !** 
 
+Nous cherchons à ajuster un modèle exponentiel de la forme :
+
+$$
+y = b \cdot a^x
+$$
+
+où $a$ et $b$ sont les paramètres à estimer à partir des données $(X, Y)$.
+
+### **Transformation logarithmique**
+L’équation exponentielle n’étant pas linéaire, nous appliquons le logarithme népérien des deux côtés :
+
+$$
+\ln y = \ln b + x \ln a
+$$
+
+En posant :
+
+$$
+Y = \ln y, \quad A = \ln a, \quad B = \ln b,
+$$
+
+::: {.alert .alert-warning}
+**Attention :** Ici, $Y$ représente les valeurs transformées $\ln y$, et **non** les valeurs originales de $Y$.
+:::
+
+nous obtenons une équation linéaire :
+
+$$
+Y = A X + B
+$$
+
+Nous pouvons maintenant estimer les paramètres $A$ et $B$ à l'aide d'une régression linéaire entre $X$ et $Y$.
+
+### **Estimation des paramètres**
+La pente de la droite de régression est donnée par :
+
+$$
+A = \frac{\text{Cov}(X, Y)}{\sigma^2_X}
+$$
+
+où $\text{Cov}(X, Y)$ est la covariance entre $X$ et $Y$, et $\sigma^2_X$ est la variance de $X$.
+
+::: {.alert .alert-warning}
+**Attention :** Ce coefficient $A$ correspond à $\ln a$, **et non** directement à $a$.
+:::
+
+L'ordonnée à l'origine est :
+
+$$
+B = \overline{Y} - A \cdot \overline{X}
+$$
+
+où $\overline{Y}$ et $\overline{X}$ sont respectivement les moyennes de $Y$ et $X$.
+
+### **Récupération des coefficients $a$ et $b$**
+
+Étant donné que $A = \ln a$ et $B = \ln b$, nous retrouvons les valeurs de $a$ et $b$ par exponentiation :
+
+$$
+ a = e^A, \quad b = e^B.
+$$
+
+### **Modèle final**
+
+En réinjectant ces valeurs dans l'équation exponentielle initiale, nous obtenons la fonction qui traduit la courbe ajustée :
+
+$$
+ y = e^B \cdot (e^A)^x
+$$
+
+Par définition des exponentielles, cela revient à :
+
+$$
+ y = e^B \cdot e^{Ax}
+$$
+
+ce qui correspond au modèle exponentiel ajusté que nous retrouvons dans R après estimation des coefficients.
+
+### **Conclusion**
+
+Grâce à cette méthode, nous avons pu estimer les paramètres $a$ et $b$ du modèle exponentiel en appliquant une régression linéaire sur les valeurs transformées $\ln Y$. L'exponentiation des coefficients obtenus nous permet de retrouver les valeurs finales de $a$ et $b$, garantissant un ajustement correct du modèle exponentiel aux données.
+
+---
+
+```{r}
+
+y_log <- log(data$Y)
+covariance_log <- cov(data$X, y_log, method = "pearson")
+a_log <- covariance_log / var(data$X)
+b_log <- mean(y_log) - a_log * mean(data$X)
+
+
+cat("a =", a_log, "b =", b_log)
+```
+
+<br>
+
+### **Modèle exponentiel ajusté**
+
+$$
+y = 1.034294 \times e^{-0.2093764 x}
+$$
+<br>
 
 ```{r echo=FALSE, fig.align='center'}
 exponential_function <- function(x) {
-  1.0343 * exp(-0.209 * x)
+  exp(b_log) * exp(a_log*x)
 }
 
 ggplot(data, aes(x = X, y = Y)) +
@@ -569,6 +724,7 @@ ggplot(data, aes(x = X, y = Y)) +
   theme_fivethirtyeight() +
   theme(axis.title = element_text(), text = element_text(family = "Segoe UI", size = 14))
 ```
+
 
 ## __13.__
 
