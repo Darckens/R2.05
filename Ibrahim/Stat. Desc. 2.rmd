@@ -783,7 +783,7 @@ $$
 
 ---
 
-#### **Interprétation des résultats**
+#### **Interprétation des résultats :**
 
 Les valeurs obtenues sont :
 
@@ -845,8 +845,8 @@ Le **modèle linéaire a une erreur résiduelle plus faible**, ce qui peut indiq
 
 ## __14.__
 
-$0,1885 = -0,0835\times8+0,8565$
-$0,1943 = 1,0343e^{-0,209\times8}$
+$$0,1885 = -0,0835\times8+0,8565$$
+$$0,1943 = 1,0343e^{-0,209\times8}$$
 
 ## __Bonus__
 
