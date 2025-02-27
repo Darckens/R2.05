@@ -56,8 +56,10 @@ Représentation du nuage de points de la statistique bi-variée ($x_{i};y_{i}$) 
 <br>
 ```{r echo=FALSE, fig.align='center'}
 
+# Lecture des données
 data <- read.csv("../donnees_r.csv", header = TRUE,  sep = ",", colClasses = c("numeric", "numeric"))
 
+# Nuage de points
 ggplot(data, aes(x = X, y = Y)) +
   geom_point(color = "red", size = 2) +
   labs(
@@ -79,6 +81,7 @@ ggplot(data, aes(x = X, y = Y)) +
 
 ```{r echo=FALSE }
 
+# Calcul de la moyenne et de la variance (de Pearson) de la quantité de bactéries
 var_Y_pearson <- sum((data$Y - mean(data$Y))^2) / length(data$Y)
 
 cat("Moyenne de la quantité de bactéries : ", mean(data$Y), "\n")
@@ -98,6 +101,8 @@ cat("Variance de la quantité de bactéries : ", var_Y_pearson)
 
 <br>
 ```{r echo=FALSE, fig.align='center'}
+
+# Boîte à moustache de la distribution de la quantité de bactéries
 ggplot(data, aes(y = Y)) +
   geom_boxplot() +
   labs(title = "Boîte à moustache de la distribution\nde la quantité de bactéries") +
@@ -119,6 +124,7 @@ Nous savons que la Covariance de $X$ et $Y$ est : $$Cov(X,Y) = \frac{1}{N}\sum_{
 
 ```{r echo=FALSE }
 
+# Calcul de la covariance entre X et Y
 cat("Covariance entre X et Y : ", cov(data$X, data$Y, method = "pearson"))
 
 ```
@@ -137,18 +143,22 @@ Les Q-Q plots (Quantile-Quantile plots) permettent de comparer les quantiles d'u
 
 <br>
 ```{r echo=FALSE, fig.align='center'}
+
+# Diagramme Quantile-Quantile (Q-Q plots) pour X
 qqX <- ggplot(data) +
   geom_qq(aes(sample = X), geom = "point", position = "identity") +
   ggtitle("Q-Q Plot de X") +
   theme_fivethirtyeight() +
   theme(text = element_text(family = "Segoe UI", size = 14))
 
+# Diagramme Quantile-Quantile (Q-Q plots) pour Y
 qqY <- ggplot(data) +
   geom_qq(aes(sample = Y), geom = "point", position = "identity") +
   ggtitle("Q-Q Plot de Y") +
   theme_fivethirtyeight() +
   theme(text = element_text(family = "Segoe UI", size = 14))
 
+# Affichage des Q-Q plots
 grid.arrange(qqX, qqY, ncol = 2)
 ```
 <br>
@@ -215,6 +225,8 @@ $$W = \frac{( \sum_{i=1}^{n} a_i x_{(i)} )^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2} 
 #### Résultats du code R
 
 ```{r echo=FALSE}
+
+# Test de Shapiro-Wilk pour les variables X et Y
 shapiro.test(data$X)
 shapiro.test(data$Y)
 ```
@@ -248,6 +260,8 @@ $$ r(X,Y) = Corr(X,Y) = \frac{Cov(X,Y)}{\sigma_X^2\sigma_Y^2}$$
 Avec R, on trouve : 
 
 ```{r echo=FALSE}
+
+# Calcul du coefficient de corrélation linéaire de Pearson
 cor.test(data$X, data$Y, method = "pearson")
 ```
 
@@ -360,9 +374,11 @@ $$
 
 ```{r}
 
+# Calcul de la covariance des variables et de la variance de X
 covariance <- cov(data$X, data$Y, method = "pearson")
 var_X <- var(data$X)
 
+# Calcul des coefficients a et b
 a <- covariance / var_X
 b <- mean(data$Y) - a * mean(data$X)
 
@@ -391,6 +407,8 @@ $$\begin{cases}
 
 <br>
 ```{r echo=FALSE, fig.align='center'}
+
+# Nuage de points avec droite de régression
 ggplot(data, aes(x = X, y = Y)) +
   geom_point(color = "red", size = 2) +
   geom_abline(slope = -0.083513, intercept = 0.856489, color = "blue", linewidth = 1) +
@@ -411,7 +429,11 @@ En observant le nuage de points, on voit clairement que lorsque le dosage de sé
 ## __9.__
 
 ```{r echo=FALSE}
+
+# Ajustement du modèle linéaire
 LMS <- lm(data$Y ~ data$X)
+
+# Résumé du modèle linéaire
 summary(LMS)
 
 #plot(summary(LMS)$residuals, main = "Distribution des résidus", ylab = "Résidus", xlab = "Observations")
@@ -468,6 +490,8 @@ $$SCR = \sum_{i=1}^n(\hat{y}- \bar{y})^2$$
 A l'aide de R, on trouve :
 
 ```{r echo=FALSE}
+
+# Calcul de la somme des carrés des résidus
 deviance(LMS)
 sum(residuals(LMS)^2)
 ```
@@ -495,6 +519,8 @@ Plus la $SCR$ est faible, plus le modèle est performant. Dans notre cas, la $SC
 <br>
 
 ```{r echo=FALSE}
+
+# Autocorrélation des résidus
 residuals <- residuals(LMS)
 acf(residuals, main = "Autocorrélation des résidus")
 ```
@@ -508,6 +534,8 @@ Le test de Durbin-Watson (DW) est un test statistique utilisé en régression li
 A l'aide de R, on obtient :
 
 ```{r echo=FALSE}
+
+# Test de Durbin-Watson sur les résidus
 dw_test <- dwtest(LMS)
 print(dw_test)
 ```
@@ -556,6 +584,8 @@ Pour rappel, nous faisons l'hypothèse suivante :
 
 A l'aide de R, on obtient :
 ```{r echo=FALSE}
+
+# Test de Shapiro-Wilk sur les résidus
 shapiro.test(residuals(LMS))
 ```
 
@@ -573,7 +603,7 @@ Cela signifie que **les résidus `(SCR)` suivent une distribution normale** au s
 
 ```{r echo=FALSE, fig.align='center'}
 
-# Diagramme Quantile-Quantile (Q-Q plot) :
+# Diagramme Quantile-Quantile (Q-Q plot) des résidus :
 
 qqnorm(residuals, main = "Q-Q Plot des résidus")
 qqline(residuals, col = "red")
@@ -688,13 +718,18 @@ Grâce à cette méthode, nous avons pu estimer les paramètres $a$ et $b$ du mo
 
 ```{r}
 
+# Transformation logarithmique des données
 y_log <- log(data$Y)
+
+# Covariance du nouveau modèle
 covariance_log <- cov(data$X, y_log, method = "pearson")
+
+# Calcul des paramètres A et B
 a_log <- covariance_log / var(data$X)
-b_log <- mean(y_log) - a_log * mean(data$X)
+b_log <- exp(mean(y_log) - a_log * mean(data$X))
 
 
-cat("a =", a_log, "b =", b_log)
+cat("A =", a_log, "B =", b_log)
 ```
 
 <br>
@@ -707,10 +742,13 @@ $$
 <br>
 
 ```{r echo=FALSE, fig.align='center'}
+
+# Fonction exponentielle ajustée
 exponential_function <- function(x) {
-  exp(b_log) * exp(a_log*x)
+  b_log * exp(a_log*x)
 }
 
+# Nuage de points avec droite de régression exponentielle + linéaire
 ggplot(data, aes(x = X, y = Y)) +
   geom_point(color = "red", size = 2) +
   geom_abline(slope = -0.0835, intercept = 0.8565, color = "blue", linewidth = 1) +
@@ -751,7 +789,8 @@ où :
 En utilisant R :
 
 ```{r echo=FALSE}
-# Ajustement du modèle linéaire
+
+# Calcul de R² pour le modèle linéaire
 summary(LMS)$r.squared
 ```
 
@@ -771,6 +810,8 @@ A l'aide du logarithme népérien, nous avons estimé les paramètres $A$ et $B$
 ```{r echo=FALSE}
 # Ajustement du modèle exponentiel
 exponential_model <- lm(log(Y) ~ X, data = data)
+
+# Calcul de R² pour le modèle exponentiel
 summary(exponential_model)$r.squared
 ```
 

@@ -1958,9 +1958,11 @@ moindres carrés) sont :</p>
 <hr />
 <div id="applications" class="section level3">
 <h3>Applications</h3>
-<pre class="r"><code>covariance &lt;- cov(data$X, data$Y, method = &quot;pearson&quot;)
+<pre class="r"><code># Calcul de la covariance des variables et de la variance de X
+covariance &lt;- cov(data$X, data$Y, method = &quot;pearson&quot;)
 var_X &lt;- var(data$X)
 
+# Calcul des coefficients a et b
 a &lt;- covariance / var_X
 b &lt;- mean(data$Y) - a * mean(data$X)
 
@@ -2326,14 +2328,19 @@ régression linéaire sur les valeurs transformées <span class="math inline">\(
 obtenus nous permet de retrouver les valeurs finales de <span class="math inline">\(a\)</span> et <span class="math inline">\(b\)</span>, garantissant un ajustement correct du
 modèle exponentiel aux données.</p>
 <hr />
-<pre class="r"><code>y_log &lt;- log(data$Y)
+<pre class="r"><code># Transformation logarithmique des données
+y_log &lt;- log(data$Y)
+
+# Covariance du nouveau modèle
 covariance_log &lt;- cov(data$X, y_log, method = &quot;pearson&quot;)
+
+# Calcul des paramètres A et B
 a_log &lt;- covariance_log / var(data$X)
-b_log &lt;- mean(y_log) - a_log * mean(data$X)
+b_log &lt;- exp(mean(y_log) - a_log * mean(data$X))
 
 
-cat(&quot;a =&quot;, a_log, &quot;b =&quot;, b_log)</code></pre>
-<pre><code>## a = -0.2093764 b = 0.03371892</code></pre>
+cat(&quot;A =&quot;, a_log, &quot;B =&quot;, b_log)</code></pre>
+<pre><code>## A = -0.2093764 B = 1.034294</code></pre>
 <p><br></p>
 </div>
 <div id="modèle-exponentiel-ajusté" class="section level3">
