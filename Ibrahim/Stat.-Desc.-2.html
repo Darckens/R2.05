@@ -1930,20 +1930,21 @@ moindres carrés) sont :</p>
 <p>Ce qui donne :</p>
 <p><span class="math display">\[
 \begin{cases}
-\overline{xy} - a\bar{x^2} - b\bar{x} = 0\\
+\overline{xy} - a\overline{x^2} - b\bar{x} = 0\\
 \bar{y} - a\bar{x} - b = 0
 \end{cases}
 \]</span></p>
 <p>Multiplication de la seconde équation par <span class="math inline">\(\bar{x}\)</span> :</p>
 <p><span class="math display">\[
 \begin{cases}
-\overline{xy} - a\bar{x^2} - b\bar{x} = 0\\
-\bar{x} \bar{y} - a\bar{x}^2 - b\bar{x} = 0
+\overline{xy} - a\overline{x^2} - b\bar{x} = 0\\
+\bar{x} \bar{y} - a\overline{x}^2 - b\bar{x} = 0
 \end{cases}
 \]</span></p>
 <p>Soustraction des deux équations :</p>
 <p><span class="math display">\[
-(\overline{xy} - \bar{x} \bar{y}) - a(\bar{x^2} - \bar{x}^2) = 0
+(\overline{xy} - \bar{x} \bar{y}) - a(\overline{x^2} - \overline{x}^2) =
+0
 \]</span></p>
 <p>Ce qui donne :</p>
 <p><span class="math display">\[
@@ -1951,16 +1952,16 @@ moindres carrés) sont :</p>
 \]</span></p>
 <p>D’où :</p>
 <p><span class="math display">\[
-\hat{a} = \frac{\text{Cov}(X, Y)}{\sigma^2} ~~~ \text{et} ~~~ \bar{b} =
+\hat{a} = \frac{\text{Cov}(X, Y)}{\sigma^2} ~~~ \text{et} ~~~ \hat{b} =
 \bar{y} - \hat{a}x
 \]</span></p>
 <hr />
 <div id="applications" class="section level3">
 <h3>Applications</h3>
 <pre class="r"><code>covariance &lt;- cov(data$X, data$Y, method = &quot;pearson&quot;)
-variance_X &lt;- var(data$X)
+var_X &lt;- var(data$X)
 
-a &lt;- covariance / variance_X
+a &lt;- covariance / var_X
 b &lt;- mean(data$Y) - a * mean(data$X)
 
 cat(&quot;a =&quot;, a, &quot;b =&quot;, b)</code></pre>
@@ -2347,17 +2348,153 @@ y = 1.034294 \times e^{-0.2093764 x}
 </div>
 <div id="section-12" class="section level2">
 <h2><strong>13.</strong></h2>
-<ol style="list-style-type: decimal">
-<li></li>
-</ol>
-<p>On sait que : <span class="math display">\[R^2 =
-\frac{SCE}{SCT}\]</span></p>
-<p>Pour allé plus vite, utilisons R :</p>
+<p>L’objectif est de comparer les modèles <strong>linéaire</strong> et
+<strong>exponentiel</strong> en utilisant le coefficient de
+détermination <span class="math inline">\(R^2\)</span>.</p>
+<p>Le coefficient de détermination <span class="math inline">\(R^2\)</span> est défini comme :</p>
+<p><span class="math display">\[
+R^2 = \frac{SCE}{SCT}
+\]</span></p>
+<p>où :</p>
+<ul>
+<li><span class="math inline">\(SCE\)</span> est la Somme des Carrés
+Expliquée par le modèle.</li>
+<li><span class="math inline">\(SCT\)</span> est la Somme des Carrés
+Totale, représentant la variabilité totale des données.</li>
+</ul>
+<div id="calcul-de-r2-pour-les-modèles-linéaire-et-exponentiel" class="section level3">
+<h3><strong>Calcul de <span class="math inline">\(R^2\)</span> pour les
+modèles linéaire et exponentiel</strong></h3>
+<p><br></p>
+<div id="modèle-linéaire" class="section level4">
+<h4><strong>Modèle linéaire</strong></h4>
+<p>En utilisant R :</p>
 <pre><code>## [1] 0.9013307</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li></li>
-</ol>
+<p>Le résultat obtenu est :</p>
+<p><span class="math display">\[
+R^2_{lin} = 0.9013
+\]</span></p>
+<hr />
+</div>
+<div id="modèle-exponentiel" class="section level4">
+<h4><strong>Modèle exponentiel</strong></h4>
+<p>A l’aide du logarithme népérien, nous avons estimé les paramètres
+<span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span> du modèle exponentiel. En utilisant R,
+on trouve le R² suivant :</p>
 <pre><code>## [1] 0.9151224</code></pre>
+<p>Le résultat obtenu est donc :</p>
+<p><span class="math display">\[
+R^2_{exp} = 0.9151
+\]</span></p>
+<hr />
+</div>
+<div id="interprétation-des-résultats-1" class="section level4">
+<h4><strong>Interprétation des résultats</strong></h4>
+<p>Les valeurs obtenues sont :</p>
+<ul>
+<li><strong>Modèle linéaire</strong> : <span class="math inline">\(R^2 =
+0.9013\)</span></li>
+<li><strong>Modèle exponentiel</strong> : <span class="math inline">\(R^2 = 0.9151\)</span></li>
+</ul>
+<p>On observe que le modèle exponentiel présente un <strong>coefficient
+<span class="math inline">\(R^2\)</span> légèrement plus élevé</strong>
+que le modèle linéaire. Cela signifie que l’ajustement exponentiel
+explique <strong>un peu mieux</strong> la variabilité des données.</p>
+<hr />
+</div>
+</div>
+<div id="interprétation-des-résultats-avec-summary" class="section level3">
+<h3>Interprétation des résultats avec <code>summary()</code></h3>
+<p>Outre <span class="math inline">\(R^2\)</span>, les résultats de
+<code>summary()</code> nous donnent plusieurs indications sur les
+modèles :</p>
+</div>
+<div id="analyse-du-modèle-exponentiel" class="section level3">
+<h3>1. <strong>Analyse du modèle exponentiel</strong></h3>
+<ul>
+<li><strong>P-value du coefficient</strong> : <span class="math inline">\(&lt; 2.2e^{-16}\)</span> (très significatif)</li>
+<li><strong>Erreur standard résiduelle</strong> : <span class="math inline">\(0.1917\)</span></li>
+<li><strong>F-statistic</strong> : <span class="math inline">\(517.5\)</span> (indique une forte relation entre
+<span class="math inline">\(X\)</span> et <span class="math inline">\(\log(Y)\)</span>)</li>
+</ul>
+<div id="interprétation-1" class="section level4">
+<h4><strong>Interprétation :</strong></h4>
+<ul>
+<li>Le coefficient de <span class="math inline">\(X\)</span> est
+<strong>très significatif</strong>, ce qui prouve que <span class="math inline">\(X\)</span> a un impact clair sur <span class="math inline">\(\log(Y)\)</span>.</li>
+<li>L’erreur standard est relativement faible, ce qui montre une bonne
+précision du modèle.</li>
+</ul>
+<p><br></p>
+</div>
+</div>
+<div id="analyse-du-modèle-linéaire" class="section level3">
+<h3>2. <strong>Analyse du modèle linéaire</strong></h3>
+<ul>
+<li><strong>P-value du coefficient</strong> : <span class="math inline">\(&lt; 2.2e^{-16}\)</span> (très significatif)</li>
+<li><strong>Erreur standard résiduelle</strong> : <span class="math inline">\(0.08306\)</span> (plus faible que
+l’exponentiel)</li>
+<li><strong>F-statistic</strong> : <span class="math inline">\(438.5\)</span></li>
+</ul>
+<div id="interprétation-2" class="section level4">
+<h4><strong>Interprétation :</strong></h4>
+<ul>
+<li>Le modèle linéaire est également <strong>très
+significatif</strong>.</li>
+<li>Son erreur standard résiduelle est <strong>plus faible</strong> que
+le modèle exponentiel, ce qui peut indiquer une meilleure précision
+locale.</li>
+</ul>
+<p><br></p>
+</div>
+</div>
+<div id="comparaison-des-modèles" class="section level3">
+<h3>Comparaison des modèles</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Critère</th>
+<th align="left">Modèle exponentiel</th>
+<th align="left">Modèle linéaire</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong><span class="math inline">\(R^2\)</span></strong></td>
+<td align="left"><strong>0.9151</strong></td>
+<td align="left">0.9013</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Erreur résiduelle</strong></td>
+<td align="left">0.1917</td>
+<td align="left"><strong>0.08306</strong></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Pente (<span class="math inline">\(a\)</span>
+ou <span class="math inline">\(\ln(a)\)</span>)</strong></td>
+<td align="left">-0.2094</td>
+<td align="left">-0.0835</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>P-value</strong></td>
+<td align="left">&lt; 2.2e-16</td>
+<td align="left">&lt; 2.2e-16</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="analyse-finale" class="section level3">
+<h3><strong>Analyse finale :</strong></h3>
+<p>Le <strong>modèle exponentiel</strong> a un <span class="math inline">\(R^2\)</span> <strong>légèrement plus
+élevé</strong>, suggérant qu’il explique mieux la variance des
+données.</p>
+<p>Le <strong>modèle linéaire a une erreur résiduelle plus
+faible</strong>, ce qui peut indiquer une meilleure précision
+locale.</p>
+<p><strong>Les deux modèles sont hautement significatifs (p-value &lt;
+2.2e-16)</strong>, donc l’un comme l’autre sont pertinents.</p>
+</div>
 </div>
 <div id="section-13" class="section level2">
 <h2><strong>14.</strong></h2>
@@ -2368,17 +2505,6 @@ y = 1.034294 \times e^{-0.2093764 x}
 <div id="bonus" class="section level2">
 <h2><strong>Bonus</strong></h2>
 <p>?????</p>
-</div>
-<div id="valeur-peut-être-utile" class="section level2">
-<h2>Valeur peut être utile</h2>
-<pre><code>## [1] 0.06848566</code></pre>
-<pre><code>## [1] 8.850479</code></pre>
-<pre><code>## [1] 0.4389205</code></pre>
-<pre><code>## [1] 5</code></pre>
-<pre><code>## [1] -0.7391376</code></pre>
-<pre><code>## [1] 0.3773284</code></pre>
-<pre><code>##         0%        25%        50%        75%       100% 
-## 0.06141661 0.22651337 0.37732843 0.60555035 1.02483571</code></pre>
 </div>
 </div>
 

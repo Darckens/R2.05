@@ -79,10 +79,10 @@ ggplot(data, aes(x = X, y = Y)) +
 
 ```{r echo=FALSE }
 
-var_X_pearson <- var(data$Y) * (nrow(data) - 1) / nrow(data)
+var_Y_pearson <- sum((data$Y - mean(data$Y))^2) / length(data$Y)
 
 cat("Moyenne de la quantité de bactéries : ", mean(data$Y), "\n")
-cat("Variance de la quantité de bactéries : ", var_X_pearson)
+cat("Variance de la quantité de bactéries : ", var_Y_pearson)
 
 ```
 
@@ -321,7 +321,7 @@ Ce qui donne :
 
 $$
 \begin{cases}
-\overline{xy} - a\bar{x^2} - b\bar{x} = 0\\
+\overline{xy} - a\overline{x^2} - b\bar{x} = 0\\
 \bar{y} - a\bar{x} - b = 0
 \end{cases}
 $$
@@ -330,15 +330,15 @@ Multiplication de la seconde équation par $\bar{x}$ :
 
 $$
 \begin{cases}
-\overline{xy} - a\bar{x^2} - b\bar{x} = 0\\
-\bar{x} \bar{y} - a\bar{x}^2 - b\bar{x} = 0
+\overline{xy} - a\overline{x^2} - b\bar{x} = 0\\
+\bar{x} \bar{y} - a\overline{x}^2 - b\bar{x} = 0
 \end{cases}
 $$
 
 Soustraction des deux équations :
 
 $$
-(\overline{xy} - \bar{x} \bar{y}) - a(\bar{x^2} - \bar{x}^2) = 0
+(\overline{xy} - \bar{x} \bar{y}) - a(\overline{x^2} - \overline{x}^2) = 0
 $$
 
 Ce qui donne :
@@ -350,7 +350,7 @@ $$
 D'où :
 
 $$
-\hat{a} = \frac{\text{Cov}(X, Y)}{\sigma^2} ~~~ \text{et} ~~~ \bar{b} = \bar{y} - \hat{a}x
+\hat{a} = \frac{\text{Cov}(X, Y)}{\sigma^2} ~~~ \text{et} ~~~ \hat{b} = \bar{y} - \hat{a}x
 $$
 
 
@@ -361,9 +361,9 @@ $$
 ```{r}
 
 covariance <- cov(data$X, data$Y, method = "pearson")
-variance_X <- var(data$X)
+var_X <- var(data$X)
 
-a <- covariance / variance_X
+a <- covariance / var_X
 b <- mean(data$Y) - a * mean(data$X)
 
 cat("a =", a, "b =", b)
@@ -728,32 +728,120 @@ ggplot(data, aes(x = X, y = Y)) +
 
 ## __13.__
 
-1. 
 
-On sait que : $$R^2 = \frac{SCE}{SCT}$$ 
+L’objectif est de comparer les modèles **linéaire** et **exponentiel** en utilisant le coefficient de détermination $R^2$.
 
-Pour allé plus vite, utilisons R :
+Le coefficient de détermination $R^2$ est défini comme :
+
+$$
+R^2 = \frac{SCE}{SCT}
+$$
+
+où :
+
+- $SCE$ est la Somme des Carrés Expliquée par le modèle.
+- $SCT$ est la Somme des Carrés Totale, représentant la variabilité totale des données.
+
+
+### **Calcul de $R^2$ pour les modèles linéaire et exponentiel**
+
+<br>
+
+#### **Modèle linéaire**
+
+En utilisant R :
 
 ```{r echo=FALSE}
-
-# Pour le modèle linéaire classique
-
+# Ajustement du modèle linéaire
 summary(LMS)$r.squared
-
 ```
 
+Le résultat obtenu est :
 
-2.
+$$
+R^2_{lin} = 0.9013
+$$
+
+---
+
+#### **Modèle exponentiel**
+
+A l'aide du logarithme népérien, nous avons estimé les paramètres $A$ et $B$ du modèle exponentiel. En utilisant R, on trouve le R² suivant :
+
 
 ```{r echo=FALSE}
-
-# Pour le modèle exponentiel
-
+# Ajustement du modèle exponentiel
 exponential_model <- lm(log(Y) ~ X, data = data)
-
 summary(exponential_model)$r.squared
-
 ```
+
+Le résultat obtenu est donc :
+
+$$
+R^2_{exp} = 0.9151
+$$
+
+---
+
+#### **Interprétation des résultats**
+
+Les valeurs obtenues sont :
+
+- **Modèle linéaire** : $R^2 = 0.9013$
+- **Modèle exponentiel** : $R^2 = 0.9151$
+
+On observe que le modèle exponentiel présente un **coefficient $R^2$ légèrement plus élevé** que le modèle linéaire. Cela signifie que l’ajustement exponentiel explique **un peu mieux** la variabilité des données.
+
+---
+
+### Interprétation des résultats avec `summary()`
+Outre $R^2$, les résultats de `summary()` nous donnent plusieurs indications sur les modèles :
+
+### 1. **Analyse du modèle exponentiel**
+
+- **P-value du coefficient** : $< 2.2e^{-16}$ (très significatif)
+- **Erreur standard résiduelle** : $0.1917$
+- **F-statistic** : $517.5$ (indique une forte relation entre $X$ et $\log(Y)$)
+
+#### **Interprétation :**
+
+- Le coefficient de $X$ est **très significatif**, ce qui prouve que $X$ a un impact clair sur $\log(Y)$.
+- L’erreur standard est relativement faible, ce qui montre une bonne précision du modèle.
+
+<br>
+
+### 2. **Analyse du modèle linéaire**
+
+- **P-value du coefficient** : $< 2.2e^{-16}$ (très significatif)
+- **Erreur standard résiduelle** : $0.08306$ (plus faible que l’exponentiel)
+- **F-statistic** : $438.5$
+
+#### **Interprétation :**
+
+- Le modèle linéaire est également **très significatif**.
+- Son erreur standard résiduelle est **plus faible** que le modèle exponentiel, ce qui peut indiquer une meilleure précision locale.
+
+<br>
+
+### Comparaison des modèles
+
+| Critère            | Modèle exponentiel | Modèle linéaire |
+|:--                 |:--                 |:--              |
+| **$R^2$**          | **0.9151**         | 0.9013          |
+| **Erreur résiduelle**| 0.1917           | **0.08306**     |
+| **Pente ($a$ ou $\ln(a)$)**|-0.2094 | -0.0835         |
+| **P-value**        |< 2.2e-16           |< 2.2e-16        |
+
+--- 
+
+### **Analyse finale :**
+
+Le **modèle exponentiel** a un $R^2$ **légèrement plus élevé**, suggérant qu'il explique mieux la variance des données.
+
+Le **modèle linéaire a une erreur résiduelle plus faible**, ce qui peut indiquer une meilleure précision locale.
+
+**Les deux modèles sont hautement significatifs (p-value < 2.2e-16)**, donc l’un comme l’autre sont pertinents.
+
 
 ## __14.__
 
@@ -764,14 +852,4 @@ $0,1943 = 1,0343e^{-0,209\times8}$
 
 ?????
 
-## Valeur peut être utile
 
-```{r echo=FALSE}
-var(data$Y)
-var(data$X)
-mean(data$Y)
-mean(data$X)
-cov(data$X, data$Y, method = "pearson")
-median(data$Y)
-quantile(data$Y)
-```
