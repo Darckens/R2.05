@@ -289,7 +289,7 @@ $$
 **et**
 
 $$
-\bar{b} = \bar{y} - \hat{a}x 
+\hat{b} = \bar{y} - \hat{a}x 
 $$
 
 # Démonstration
