@@ -1992,13 +1992,13 @@ cat(&quot;a =&quot;, a, &quot;b =&quot;, b)</code></pre>
 <h2><strong>8.</strong></h2>
 <p>En observant le nuage de points, on voit clairement que lorsque le
 dosage de sérum augmente, la quantité de bactéries diminue de manière
-régulière. La droite de régression, qui semble passer naturellement au
-milieu de ces données, reflète bien cette tendance. Cette modélisation
-linéaire nous paraît être une première approximation logique et
-cohérente, en accord avec l’idée que l’augmentation du dosage se traduit
-par une diminution de la concentration bactérienne. L’ajustement
-linéaire offre ici une représentation intuitive et satisfaisante de la
-relation observée.</p>
+régulière. La droite de régression, qui semble plutôt passer au milieu
+de ces données, reflète bien cette tendance. Cette modélisation linéaire
+nous paraît être une première approximation logique et cohérente, en
+accord avec l’idée que l’augmentation du dosage se traduit par une
+diminution de la concentration bactérienne. L’ajustement linéaire offre
+ici une représentation intuitive et assez satisfaisante de la relation
+observée.</p>
 </div>
 <div id="section-8" class="section level2">
 <h2><strong>9.</strong></h2>
@@ -2269,15 +2269,15 @@ logarithme népérien des deux côtés :</p>
 <p><span class="math display">\[
 Y = \ln y, \quad A = \ln a, \quad B = \ln b,
 \]</span></p>
+<p>nous obtenons une équation linéaire :</p>
+<p><span class="math display">\[
+Y = A X + B
+\]</span></p>
 <div class="alert alert-warning">
 <p><strong>Attention :</strong> Ici, <span class="math inline">\(Y\)</span> représente les valeurs transformées
 <span class="math inline">\(\ln y\)</span>, et <strong>non</strong> les
 valeurs originales de <span class="math inline">\(Y\)</span>.</p>
 </div>
-<p>nous obtenons une équation linéaire :</p>
-<p><span class="math display">\[
-Y = A X + B
-\]</span></p>
 <p>Nous pouvons maintenant estimer les paramètres <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span> à l’aide d’une régression linéaire
 entre <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>.</p>
 </div>

@@ -11,7 +11,7 @@ lang: fr
 ---
 
 ```{r eval=FALSE, include=FALSE}
-# Run this the first time you open the document to install all the required packages
+# Exécutez ceci la première fois que vous ouvrez le document pour installer tous les packages requis
 
 list.of.packages <- c("ggplot2", "ggthemes", "extrafont", "gridExtra", "lmtest")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
@@ -19,7 +19,7 @@ if (length(new.packages)) install.packages(new.packages)
 ```
 
 ```{r echo=FALSE, message=FALSE}
-# Run these at the start
+# Exécutez ces lignes au début
 
 library(ggplot2)
 library(ggthemes)
@@ -29,7 +29,8 @@ library(lmtest)
 ```
 
 ```{r eval=FALSE, include=FALSE}
-# Run these only one time
+# FR : Exécutez ceci une seule fois
+
 font_import()
 loadfonts()
 ```
@@ -424,7 +425,7 @@ ggplot(data, aes(x = X, y = Y)) +
 
 ## __8.__
 
-En observant le nuage de points, on voit clairement que lorsque le dosage de sérum augmente, la quantité de bactéries diminue de manière régulière. La droite de régression, qui semble passer naturellement au milieu de ces données, reflète bien cette tendance. Cette modélisation linéaire nous paraît être une première approximation logique et cohérente, en accord avec l'idée que l'augmentation du dosage se traduit par une diminution de la concentration bactérienne. L'ajustement linéaire offre ici une représentation intuitive et satisfaisante de la relation observée.
+En observant le nuage de points, on voit clairement que lorsque le dosage de sérum augmente, la quantité de bactéries diminue de manière régulière. La droite de régression, qui semble plutôt passer au milieu de ces données, reflète bien cette tendance. Cette modélisation linéaire nous paraît être une première approximation logique et cohérente, en accord avec l'idée que l'augmentation du dosage se traduit par une diminution de la concentration bactérienne. L'ajustement linéaire offre ici une représentation intuitive et assez satisfaisante de la relation observée.
 
 ## __9.__
 
@@ -654,15 +655,15 @@ $$
 Y = \ln y, \quad A = \ln a, \quad B = \ln b,
 $$
 
-::: {.alert .alert-warning}
-**Attention :** Ici, $Y$ représente les valeurs transformées $\ln y$, et **non** les valeurs originales de $Y$.
-:::
-
 nous obtenons une équation linéaire :
 
 $$
 Y = A X + B
 $$
+
+::: {.alert .alert-warning}
+**Attention :** Ici, $Y$ représente les valeurs transformées $\ln y$, et **non** les valeurs originales de $Y$.
+:::
 
 Nous pouvons maintenant estimer les paramètres $A$ et $B$ à l'aide d'une régression linéaire entre $X$ et $Y$.
 
