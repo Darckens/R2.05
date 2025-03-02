@@ -98,6 +98,12 @@ cat("Variance de la quantité de bactéries : ", var_Y_pearson)
 
 <br>
 
+::: {.alert .alert-warning}
+**Attention :** Ici, la variance est calculée selon la formule de König-Huygens. Il s'agit de la moyenne des carrés des écarts à la moyenne.
+:::
+
+<br>
+
 ### b\) Box-plot de la dsitribution de la variable : __Quantité de bactéries__
 
 <br>
