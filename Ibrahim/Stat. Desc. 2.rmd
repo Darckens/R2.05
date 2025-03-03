@@ -131,8 +131,12 @@ Nous savons que la Covariance de $X$ et $Y$ est : $$Cov(X,Y) = \frac{1}{N}\sum_{
 
 ```{r echo=FALSE }
 
-# Calcul de la covariance entre X et Y
-cat("Covariance entre X et Y : ", cov(data$X, data$Y, method = "pearson"))
+# Calcul de la covariance entre X et Y 
+
+covariance <- sum(data$X * data$Y) / length(data$X) - mean(data$X) * mean(data$Y)
+
+
+cat("Covariance entre X et Y : ", covariance)
 
 ```
 
@@ -381,12 +385,12 @@ $$
 
 ```{r}
 
-# Calcul de la covariance des variables et de la variance de X
-covariance <- cov(data$X, data$Y, method = "pearson")
-var_X <- var(data$X)
+# Calcul de la variance de X
+
+var_X_pearson <- sum((data$X - mean(data$X))^2) / length(data$X)
 
 # Calcul des coefficients a et b
-a <- covariance / var_X
+a <- covariance / var_X_pearson
 b <- mean(data$Y) - a * mean(data$X)
 
 cat("a =", a, "b =", b)
@@ -395,11 +399,11 @@ cat("a =", a, "b =", b)
 
 <br> 
 
-$$\hat{a} = \frac{-0,7243548}{8,673469} = -0,083513$$
+$$\hat{a} = \frac{-0,7243548}{8,673469} = -0.08351385$$
 
 **et**
 
-$$\hat{b} = 0,4389205 - (-0,083513*5) = 0,856489$$ 
+$$\hat{b} = 0,4389205 - (−0.08351385*5) = 0.8564897$$ 
 
 --- 
 
@@ -729,10 +733,10 @@ Grâce à cette méthode, nous avons pu estimer les paramètres $a$ et $b$ du mo
 y_log <- log(data$Y)
 
 # Covariance du nouveau modèle
-covariance_log <- cov(data$X, y_log, method = "pearson")
+covariance_log <- sum(data$X * y_log) / length(data$X) - mean(data$X) * mean(y_log)
 
 # Calcul des paramètres A et B
-a_log <- covariance_log / var(data$X)
+a_log <- covariance_log / var_X_pearson
 b_log <- exp(mean(y_log) - a_log * mean(data$X))
 
 

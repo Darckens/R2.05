@@ -1709,7 +1709,7 @@ homogène des données.</p>
 (\frac{1}{N}\sum_{i=1}^{i=N}(X_iY_i)) -
 \overline{X}\overline{Y}\]</span></p>
 <hr />
-<pre><code>## Covariance entre X et Y :  -0.7391376</code></pre>
+<pre><code>## Covariance entre X et Y :  -0.7243548</code></pre>
 <hr />
 <p>On trouve donc : <strong><span class="math inline">\(Cov(X, Y) =
 -0,7243548\)</span></strong><br />
@@ -1964,22 +1964,22 @@ moindres carrés) sont :</p>
 <hr />
 <div id="applications" class="section level3">
 <h3>Applications</h3>
-<pre class="r"><code># Calcul de la covariance des variables et de la variance de X
-covariance &lt;- cov(data$X, data$Y, method = &quot;pearson&quot;)
-var_X &lt;- var(data$X)
+<pre class="r"><code># Calcul de la variance de X
+
+var_X_pearson &lt;- sum((data$X - mean(data$X))^2) / length(data$X)
 
 # Calcul des coefficients a et b
-a &lt;- covariance / var_X
+a &lt;- covariance / var_X_pearson
 b &lt;- mean(data$Y) - a * mean(data$X)
 
 cat(&quot;a =&quot;, a, &quot;b =&quot;, b)</code></pre>
 <pre><code>## a = -0.08351385 b = 0.8564897</code></pre>
 <p><br></p>
 <p><span class="math display">\[\hat{a} = \frac{-0,7243548}{8,673469} =
--0,083513\]</span></p>
+-0.08351385\]</span></p>
 <p><strong>et</strong></p>
-<p><span class="math display">\[\hat{b} = 0,4389205 - (-0,083513*5) =
-0,856489\]</span></p>
+<p><span class="math display">\[\hat{b} = 0,4389205 - (−0.08351385*5) =
+0.8564897\]</span></p>
 <hr />
 </div>
 <div id="récapitulatif" class="section level3">
@@ -2338,10 +2338,10 @@ modèle exponentiel aux données.</p>
 y_log &lt;- log(data$Y)
 
 # Covariance du nouveau modèle
-covariance_log &lt;- cov(data$X, y_log, method = &quot;pearson&quot;)
+covariance_log &lt;- sum(data$X * y_log) / length(data$X) - mean(data$X) * mean(y_log)
 
 # Calcul des paramètres A et B
-a_log &lt;- covariance_log / var(data$X)
+a_log &lt;- covariance_log / var_X_pearson
 b_log &lt;- exp(mean(y_log) - a_log * mean(data$X))
 
 
