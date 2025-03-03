@@ -1958,8 +1958,8 @@ moindres carrés) sont :</p>
 \]</span></p>
 <p>D’où :</p>
 <p><span class="math display">\[
-\hat{a} = \frac{\text{Cov}(X, Y)}{\sigma^2} ~~~ \text{et} ~~~ \hat{b} =
-\bar{y} - \hat{a}x
+\hat{a} = \frac{\text{Cov}(X, Y)}{\sigma_X^2} ~~~ \text{et} ~~~ \hat{b}
+= \bar{y} - \hat{a}\bar{x}
 \]</span></p>
 <hr />
 <div id="applications" class="section level3">
@@ -2162,10 +2162,10 @@ des autres</li>
 <li>Si <strong><code>DW</code></strong> est proche de
 <strong>2</strong>, cela signifie qu’il n’y a pas
 d’autocorrélation.</li>
-<li>Si <strong><code>DW</code></strong> proche de 0, cela indique une
-forte autocorrélation positive des résidus.</li>
-<li>Si <strong><code>DW</code></strong> proche de 4, cela indique une
-forte autocorrélation négative des résidus.</li>
+<li>Si <strong><code>DW</code></strong> proche de <strong>0</strong>,
+cela indique une forte autocorrélation positive des résidus.</li>
+<li>Si <strong><code>DW</code></strong> proche de <strong>4</strong>,
+cela indique une forte autocorrélation négative des résidus.</li>
 </ul>
 <hr />
 <p>Nous trouvons un <strong><code>DW</code> de 0.61628</strong>. Cette

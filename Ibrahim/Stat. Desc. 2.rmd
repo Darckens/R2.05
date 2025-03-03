@@ -375,7 +375,7 @@ $$
 D'où :
 
 $$
-\hat{a} = \frac{\text{Cov}(X, Y)}{\sigma^2} ~~~ \text{et} ~~~ \hat{b} = \bar{y} - \hat{a}x
+\hat{a} = \frac{\text{Cov}(X, Y)}{\sigma_X^2} ~~~ \text{et} ~~~ \hat{b} = \bar{y} - \hat{a}\bar{x}
 $$
 
 
@@ -562,8 +562,8 @@ Avant de commencer, dans ce test, il est fait l'hypothèse suivante :
 Statistique de Durbin-Watson (DW) :
 
 - Si **`DW`** est proche de **2**, cela signifie qu'il n'y a pas d'autocorrélation. 
-- Si **`DW`** proche de 0, cela indique une forte autocorrélation positive des résidus.
-- Si **`DW`** proche de 4, cela indique une forte autocorrélation négative des résidus.
+- Si **`DW`** proche de **0**, cela indique une forte autocorrélation positive des résidus.
+- Si **`DW`** proche de **4**, cela indique une forte autocorrélation négative des résidus.
 
 ---
 
