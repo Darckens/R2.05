@@ -876,12 +876,12 @@ Outre $R^2$, les résultats de `summary()` nous donnent plusieurs indications su
 
 ### Comparaison des modèles
 
-| Critère            | Modèle exponentiel | Modèle linéaire |
-|:--                 |:--                 |:--              |
-| **$R^2$**          | **0.9151**         | 0.9013          |
-| **Erreur résiduelle**| 0.1917           | **0.08306**     |
-| **Pente ($a$ ou $\ln(a)$)**|-0.2094     | -0.0835         |
-| **P-value**        |< 2.2e-16           |< 2.2e-16        |
+| Critère                     | Modèle exponentiel | Modèle linéaire |
+|:--                          |:--                 |:--              |
+| **$R^2$**                   | **0.9151**         | 0.9013          |
+| **Erreur résiduelle**       | 0.1917             | **0.08306**     |
+| **Pente ($a$ ou $\ln(a)$)** |-0.209       4      | -0.0835         |
+| **P-value**                 |< 2.2e-16           |< 2.2e-16        |
 
 --- 
 
