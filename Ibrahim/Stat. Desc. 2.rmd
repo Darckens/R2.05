@@ -399,11 +399,15 @@ cat("a =", a, "b =", b)
 
 <br> 
 
-$$\hat{a} = \frac{-0,7243548}{8,673469} = -0.08351385$$
+$$
+\hat{a} = \frac{-0,7243548}{8,673469} = -0.08351385
+$$
 
 **et**
 
-$$\hat{b} = 0,4389205 - (−0.08351385*5) = 0.8564897$$ 
+$$
+\hat{b} = 0,4389205 - (−0.08351385*5) = 0.8564897
+$$ 
 
 --- 
 
@@ -496,7 +500,9 @@ Le coefficient de détermination $R^2$ est de **0.9013**. Cela signifie que **90
 
 On sait que : 
 
-$$SCR = \sum_{i=1}^n(\hat{y}- \bar{y})^2$$ 
+$$
+SCR = \sum_{i=1}^n(\hat{y}- \bar{y})^2
+$$ 
 
 A l'aide de R, on trouve :
 
@@ -508,7 +514,9 @@ sum(residuals(LMS)^2)
 ```
 <br>
 
-$$SCR = 0.3311143$$
+$$
+SCR = 0.3311143
+$$
 
 ---
 
@@ -529,12 +537,30 @@ Plus la $SCR$ est faible, plus le modèle est performant. Dans notre cas, la $SC
 
 <br>
 
+##### **Qu'est ce que la fonction `acf()`** 
+
+De manière générale, a fonction **`acf()`** permet de tracer la fonction d'autocorrélation d'une série temporelle. Elle permet de visualiser les corrélations entre les observations d'une série en fonction du décalage entre elles.
+
+Voici le graphique obtenu à l'aide de R :
+
 ```{r echo=FALSE}
 
 # Autocorrélation des résidus
 residuals <- residuals(LMS)
 acf(residuals, main = "Autocorrélation des résidus")
 ```
+
+---
+
+##### **Interprétation du graphique**
+
+On voit qu'au début, les résidus sont fortement corrélés, puis la corrélation diminue progressivement pour devenir proche de zéro. Cela indique que les résidus ne sont pas indépendants les uns des autres et qu'il y a une certaine autocorrélation positive.
+
+Ce résultat es assez logique. En effet, lors de la première administration du sérum, la quantité de bactéries diminue. Lors de la deuxième administration, la quantité de bactéries diminue à nouveau, mais elle est déjà plus faible qu'après la première administration. Ainsi, les résidus sont corrélés, car la quantité de bactéries dépend de la quantité précédente. 
+
+On notera aussi le fait, que nous ne connaissons rien de cette bactérie, il est donc normal que la partie résiduelle soit élevé au début et diminue au fur et à mesure des administrations. Car l'individu se débarrasse de la bactérie et donc se rapproche d'un état de santé que nous pouvons expliqué. 
+
+<br>
 
 #### ii\)
 
@@ -727,7 +753,7 @@ Grâce à cette méthode, nous avons pu estimer les paramètres $a$ et $b$ du mo
 
 ---
 
-```{r}
+```{r echo=FALSE}
 
 # Transformation logarithmique des données
 y_log <- log(data$Y)
@@ -896,11 +922,80 @@ Le **modèle linéaire a une erreur résiduelle plus faible**, ce qui peut indiq
 
 ## __14.__
 
-$$0,1885 = -0,0835\times8+0,8565$$
-$$0,1943 = 1,0343e^{-0,209\times8}$$
+Nous cherchons à calculer, à partir de chacun des deux modèles, une prévision de la quantité de bactérie encore présente dans le corps 24 heures après l’injection d’une dose de 8 mL de sérum.
+
+### **Modèle exponentiel**
+
+Dans le modèle exponentiel, nous avons :
+
+$$
+y = 1.034294 \times e^{-0.2093764 x}
+$$
+
+En remplaçant $x = 8$ :
+
+```{r}
+
+cat("Y exponentiel =", 1.034294 * exp(-0.2093764 * 8))
+```
+
+### **Modèle linéaire**
+
+Dans le modèle linéaire, nous avons :
+
+$$
+\hat{y} = -0,083513x + 0,856489
+$$
+
+En remplaçant $x = 8$ :
+
+```{r}
+
+cat("Y linéaire =", -0.083513 * 8 + 0.856489)
+```
+
+---
+
+### **Résultats**
+
+- **Modèle exponentiel** : $0.1943$
+- **Modèle linéaire** : $0.1885$
+
+---
+
+### **Interprétation**
+
+Les deux modèles donnent des prévisions différentes pour la quantité de bactéries restante 24 heures après l’injection d’une dose de 8 mL de sérum. 
 
 ## __Bonus__
 
-?????
+
+On cherche dans le modèle exponentiel à résoudre l'équation suivante :
+ 
+$$
+y = 0 \Longleftrightarrow 1.034294 \times e^{-0.2093764 x} = 0 
+$$
+
+On cherche dans le modèle linéaire à résoudre l'équation suivante :
+
+$$
+\hat{y} = 0 \Longleftrightarrow -0,083513x + 0,856489 = 0 
+$$
+$$
+\Longleftrightarrow -0,083513x = -0,856489
+$$
+
+$$
+\Longleftrightarrow x = \frac{-0,856489}{-0,083513}
+$$
+
+```{r}
+
+cat("X linéaire =", ((-0.856489)/(-0.083513))*24)
+
+```
+
+
+
 
 
