@@ -125,7 +125,10 @@ L'analyse de la quantité de bactéries montre une moyenne de __$0,4389205$__ et
 
 ## __4.__
 
-Nous savons que la Covariance de $X$ et $Y$ est : $$Cov(X,Y) = \frac{1}{N}\sum_{i=1}^{i=N}(X_i - \overline{X})(Y_i - \overline{Y}) = (\frac{1}{N}\sum_{i=1}^{i=N}(X_iY_i)) - \overline{X}\overline{Y}$$
+Nous savons que la Covariance de $X$ et $Y$ est : 
+
+$$Cov(x,y) = \frac{1}{n}\sum_{i=1}^{i=n}(x_i - \overline{x})(y_i - \overline{y}) = (\frac{1}{n}\sum_{i=1}^{i=n}(x_iy_i)) - \overline{x}\overline{y}
+$$
 
 ---
 
@@ -142,7 +145,7 @@ cat("Covariance entre X et Y : ", covariance)
 
 ---
 
-On trouve donc : __$Cov(X, Y) = -0,7243548$__\
+On trouve donc : __$Cov(x, y) = -0,7243548$__\
 
 La covariance entre les deux variables étant de __$-0,7243548$__, cela indique une assez forte relation. Le signe étant négative, cela  indique que $X$ et $Y$ évoluent de manière opposé. Autrement dit, lorsque $X$ augmente, $Y$ quant à lui à diminuer, et inversement. Ce qui coincide avec l'observation faite ci-dessus, dans le nuage de point.
 
@@ -267,7 +270,7 @@ Ainsi, nous pouvons conclure que **la variable `Y` ne suit pas une distribution 
 
 On sait que le coefficient de corrélation linéaire de Pearson se calcul de la façon suivante :
 
-$$ r(X,Y) = Corr(X,Y) = \frac{Cov(X,Y)}{\sigma_X^2\sigma_Y^2}$$
+$$ r(x,y) = Corr(x,y) = \frac{Cov(x,y)}{\sigma_x^2\sigma_y^2}$$
 Avec R, on trouve : 
 
 ```{r echo=FALSE}
@@ -295,7 +298,7 @@ Cela signifie que nous cherchons les valeurs spécifiques de $a$ et $b$ qui rend
 Dans un modèle linéaire, le meilleur coefficient directeur (au sens des moindres carrés) et la meilleure ordonnée à l'origine (au sens des moindres carrés) sont :
 
 $$
-\hat{a} = \frac{\text{Cov}(X, Y)}{\sigma^2}
+\hat{a} = \frac{\text{Cov}(x, y)}{\sigma_x^2}
 $$
 **et**
 
