@@ -1667,14 +1667,15 @@ potentiellement de <span class="math inline">\(X\)</span>.<br />
 <h3>a) Calcul de la moyenne et de la variance de la quantité de
 bactéries</h3>
 <p><br></p>
+<p><strong>Résultats du code R</strong></p>
 <pre><code>## Moyenne de la quantité de bactéries :  0.4389205</code></pre>
 <pre><code>## Variance de la quantité de bactéries :  0.06711594</code></pre>
 <hr />
 <ul>
-<li><p>Moyenne : <strong><span class="math inline">\(\overline{y} =
-0,4389205\)</span></strong></p></li>
-<li><p>Variance : <strong><span class="math inline">\(\sigma^2 =
-0,0671159\)</span></strong></p></li>
+<li><p>Moyenne : <span class="math inline">\(\overline{y} = ~\)</span>
+<strong>0,4389205$</strong></p></li>
+<li><p>Variance : <span class="math inline">\(\sigma^2 = ~\)</span>
+<strong>0,0671159</strong></p></li>
 </ul>
 <p><br></p>
 <div class="alert alert-warning">
@@ -1712,7 +1713,7 @@ homogène des données.</p>
 <hr />
 <pre><code>## Covariance entre X et Y :  -0.7243548</code></pre>
 <hr />
-<p>On trouve donc : <strong><span class="math inline">\(Cov(X, Y) =
+<p>On trouve donc : <strong><span class="math inline">\(Cov(x, y) =
 -0,7243548\)</span></strong><br />
 </p>
 <p>La covariance entre les deux variables étant de <strong><span class="math inline">\(-0,7243548\)</span></strong>, cela indique une
@@ -1854,8 +1855,8 @@ ne suit pas une distribution normale</strong>.</p>
 <h2><strong>6.</strong></h2>
 <p>On sait que le coefficient de corrélation linéaire de Pearson se
 calcul de la façon suivante :</p>
-<p><span class="math display">\[ r(X,Y) = Corr(X,Y) =
-\frac{Cov(X,Y)}{\sigma_X^2\sigma_Y^2}\]</span> Avec R, on trouve :</p>
+<p><span class="math display">\[ r(x,y) = Corr(x,y) =
+\frac{Cov(x,y)}{\sigma_x^2\sigma_y^2}\]</span> Avec R, on trouve :</p>
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
 ## 
@@ -1896,7 +1897,7 @@ erreurs aussi petite que possible.</p>
 des moindres carrés) et la meilleure ordonnée à l’origine (au sens des
 moindres carrés) sont :</p>
 <p><span class="math display">\[
-\hat{a} = \frac{\text{Cov}(X, Y)}{\sigma^2}
+\hat{a} = \frac{\text{Cov}(x, y)}{\sigma_x^2}
 \]</span> <strong>et</strong></p>
 <p><span class="math display">\[
 \hat{b} = \bar{y} - \hat{a}x

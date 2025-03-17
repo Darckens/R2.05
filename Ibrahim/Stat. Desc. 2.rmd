@@ -5,7 +5,8 @@ date: "2025-02-21"
 output:
   html_document:
     df_print: paged
-  pdf_document: default
+  pdf_document:
+    latex_engine: xelatex
   word_document: default
 lang: fr
 ---
@@ -62,15 +63,14 @@ data <- read.csv("../donnees_r.csv", header = TRUE,  sep = ",", colClasses = c("
 
 # Nuage de points
 ggplot(data, aes(x = X, y = Y)) +
-  geom_point(color = "red", size = 2) +
-  labs(
-    title = "Nuage de points : Dosage vs Bactéries",
-    x = "Dosage de sérum (mL)",
-    y = "Quantité de bactéries (UFC/mL)"
-  ) +
-  theme_fivethirtyeight() +
-  theme(axis.title = element_text(), text = element_text(family = "Segoe UI", size = 14))
-
+      geom_point(color = "red", size = 2) +
+      labs(
+        title = "Nuage de points : Dosage vs Bactéries",
+        x = "Dosage de sérum (mL)",
+        y = "Quantité de bactéries (UFC/mL)"
+     ) +
+     theme_fivethirtyeight() +
+     theme(axis.title = element_text(), text = element_text(family = "Segoe UI", size = 14))
 ```
 <br>
 
@@ -79,6 +79,8 @@ ggplot(data, aes(x = X, y = Y)) +
 ### a\) Calcul de la moyenne et de la variance de la quantité de bactéries
 
 <br>
+
+**Résultats du code R**
 
 ```{r echo=FALSE }
 
@@ -92,9 +94,9 @@ cat("Variance de la quantité de bactéries : ", var_Y_pearson)
 
 ---
 
-- Moyenne : __$\overline{y} = 0,4389205$__
+- Moyenne : $\overline{y} = ~$ **0,4389205$**
 
-- Variance : __$\sigma^2 = 0,0671159$__
+- Variance : $\sigma^2 = ~$ **0,0671159**
 
 <br>
 
