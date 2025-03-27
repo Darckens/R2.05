@@ -39,7 +39,7 @@ loadfonts()
 
 # __Exercice n°1__
 
-## __1.__\
+## __Question 1 :__\
 
 <br>
 Tout d'abord, qu'est-ce qu'une variable explicative et une variable expliquée ?
@@ -51,7 +51,7 @@ Tout d'abord, qu'est-ce qu'une variable explicative et une variable expliquée ?
 Ainsi, dans le cadre de notre exercice, la variable explicative est le **dosage de sérum X (en mL)**. Et la variable expliquée est la **quantité de bactéries Y (en UFC/mL)**, car c'est celle qui est mesurée en fonction du dosage de sérum et qui dépend potentiellement de $X$.\
 <br>
 
-## __2.__\
+## __Question 2 :__\
 
 Représentation du nuage de points de la statistique bi-variée ($x_{i};y_{i}$) :
 
@@ -74,7 +74,7 @@ ggplot(data, aes(x = X, y = Y)) +
 ```
 <br>
 
-## __3.__\
+## __Question 3 :__\
 
 ### a\) Calcul de la moyenne et de la variance de la quantité de bactéries
 
@@ -94,7 +94,7 @@ cat("Variance de la quantité de bactéries : ", var_Y_pearson)
 
 ---
 
-- Moyenne : $\overline{y} = ~$ **0,4389205$**
+- Moyenne : $\overline{y} = ~$ **0,4389205**
 
 - Variance : $\sigma^2 = ~$ **0,0671159**
 
@@ -125,12 +125,11 @@ ggplot(data, aes(y = Y)) +
 
 L'analyse de la quantité de bactéries montre une moyenne de __$0,4389205$__ et une variance de __$0,0671159$__, indiquant une dispersion modérée. Le diagramme en boîte révèle une distribution symétrique avec une médiane autour de __$0,4$__ et un intervalle interquartile de __$0,23$__ à __$0,60$__, suggérant une répartition homogène des données.
 
-## __4.__
+## __Question 4 :__
 
-Nous savons que la Covariance de $X$ et $Y$ est : 
+Nous savons que la Covariance de $x$ et $y$ est : 
 
-$$Cov(x,y) = \frac{1}{n}\sum_{i=1}^{i=n}(x_i - \overline{x})(y_i - \overline{y}) = (\frac{1}{n}\sum_{i=1}^{i=n}(x_iy_i)) - \overline{x}\overline{y}
-$$
+$$Cov(x,y) = \frac{1}{n}\sum_{i=1}^{i=n}(x_i - \overline{x})(y_i - \overline{y}) = (\frac{1}{n}\sum_{i=1}^{i=n}(x_iy_i)) - \overline{x}\overline{y}$$
 
 ---
 
@@ -151,7 +150,7 @@ On trouve donc : __$Cov(x, y) = -0,7243548$__\
 
 La covariance entre les deux variables étant de __$-0,7243548$__, cela indique une assez forte relation. Le signe étant négative, cela  indique que $X$ et $Y$ évoluent de manière opposé. Autrement dit, lorsque $X$ augmente, $Y$ quant à lui à diminuer, et inversement. Ce qui coincide avec l'observation faite ci-dessus, dans le nuage de point.
 
-## __5.__
+## __Question 5 :__
 
 Les Q-Q plots (Quantile-Quantile plots) permettent de comparer les quantiles d'une variable observée à ceux d'une distribution théorique, souvent la distribution normale. En examinant l'alignement des points sur une droite diagonale, il est possible d'évaluer visuellement si une variable suit une distribution normale.
 
@@ -268,7 +267,7 @@ Dans ce cas, la **p-valeur est inférieure à 0.05**, nous **rejetons donc** l'h
 Ainsi, nous pouvons conclure que **la variable `Y` ne suit pas une distribution normale**.  
 
 
-## __6.__
+## __Question 6 :__
 
 On sait que le coefficient de corrélation linéaire de Pearson se calcul de la façon suivante :
 
@@ -286,7 +285,7 @@ cor.test(data$X, data$Y, method = "pearson")
 Le coefficient de corrélation linéaire de Pearson est de __$-0,9493844$__. Ce coefficient est très proche de -1, ce qui indique une forte corrélation négative entre les deux variables. Cela signifie que $X$ et $Y$ évoluent de manière opposée (comme supposé avec la covariance). Cette relation est donc confirmée par le coefficient de corrélation élevé, qui suggère une forte dépendance linéaire entre les deux variables. 
 <br>
 
-## __7.__
+## __Question 7 :__
 
 # Introduction
 On sait qu'une droite affine s'exprime de la façon suivante : **$y = ax + b$**
@@ -388,7 +387,7 @@ $$
 
 ### Applications 
 
-```{r}
+```{r echo=FALSE}
 
 # Calcul de la variance de X
 
@@ -442,11 +441,11 @@ ggplot(data, aes(x = X, y = Y)) +
 ```
 <br>
 
-## __8.__
+## __Question 8 :__
 
 En observant le nuage de points, on voit clairement que lorsque le dosage de sérum augmente, la quantité de bactéries diminue de manière régulière. La droite de régression, qui semble plutôt passer au milieu de ces données, reflète bien cette tendance. Cette modélisation linéaire nous paraît être une première approximation logique et cohérente, en accord avec l'idée que l'augmentation du dosage se traduit par une diminution de la concentration bactérienne. L'ajustement linéaire offre ici une représentation intuitive et assez satisfaisante de la relation observée.
 
-## __9.__
+## __Question 9 :__
 
 ```{r echo=FALSE}
 
@@ -501,7 +500,7 @@ De plus, **la médiane des résidus est proche de 0**, ce qui indique que le mod
 
 Le coefficient de détermination $R^2$ est de **0.9013**. Cela signifie que **90.13% de la variance de la variable dépendante $Y$ est expliquée par la variable explicative $X$**. Ce coefficient est très élevé, ce qui indique que le modèle linéaire est **très performant** pour prédire la quantité de bactéries en fonction du dosage de sérum.
 
-## __10.__
+## __Question 10 :__
 
 On sait que : 
 
@@ -530,7 +529,7 @@ $$
 Plus la $SCR$ est faible, plus le modèle est performant. Dans notre cas, la $SCR$ est de **0.3311143**, ce qui indique que le modèle linéaire explique une grande partie de la variance de la variable dépendante $Y$. Cela confirme la pertinence du modèle pour prédire la quantité de bactéries en fonction du dosage de sérum.
 
 
-## __11.__
+## __Question 11 :__
 
 <br>
 
@@ -538,7 +537,7 @@ Plus la $SCR$ est faible, plus le modèle est performant. Dans notre cas, la $SC
 
 <br>
 
-#### ii\) 
+#### i\) 
 
 <br>
 
@@ -671,7 +670,7 @@ Les **résidus semblent donc être normalement distribué.**
 
 Le test de **Shapiro-Wilk** et le **Q-Q plot** des résidus indiquent que ces derniers suivent une **distribution normale**. Cela confirme que les résidus du modèle de régression linéaire sont bien distribués selon une **loi normale**.
 
-## __12.__
+## __Question 12 :__
 
 ### **Un peu de mathématiques !** 
 
@@ -681,7 +680,7 @@ $$
 y = b \cdot a^x
 $$
 
-où $a$ et $b$ sont les paramètres à estimer à partir des données $(X, Y)$.
+où $a$ et $b$ sont les paramètres à estimer à partir des données $(x, y)$.
 
 ### **Transformation logarithmique**
 L’équation exponentielle n’étant pas linéaire, nous appliquons le logarithme népérien des deux côtés :
@@ -693,48 +692,48 @@ $$
 En posant :
 
 $$
-Y = \ln y, \quad A = \ln a, \quad B = \ln b,
+z = \ln y, \quad \alpha = \ln a, \quad \beta = \ln b,
 $$
 
 nous obtenons une équation linéaire :
 
 $$
-Y = A X + B
+z = \alpha x + \beta
 $$
 
 ::: {.alert .alert-warning}
-**Attention :** Ici, $Y$ représente les valeurs transformées $\ln y$, et **non** les valeurs originales de $Y$.
+**Attention :** Ici, $z$ représente les valeurs transformées $\ln y$, et **non** les valeurs originales de $y$.
 :::
 
-Nous pouvons maintenant estimer les paramètres $A$ et $B$ à l'aide d'une régression linéaire entre $X$ et $Y$.
+Nous pouvons maintenant estimer les paramètres $\alpha$ et $\beta$ à l'aide d'une régression linéaire entre $x$ et $y$.
 
 ### **Estimation des paramètres**
 La pente de la droite de régression est donnée par :
 
 $$
-A = \frac{\text{Cov}(X, Y)}{\sigma^2_X}
+ \alpha= \frac{\text{Cov}(x, z)}{\sigma^2_x}
 $$
 
-où $\text{Cov}(X, Y)$ est la covariance entre $X$ et $Y$, et $\sigma^2_X$ est la variance de $X$.
+où $\text{Cov}(x, z)$ est la covariance entre $x$ et $z$, et $\sigma^2_x$ est la variance de $x$.
 
 ::: {.alert .alert-warning}
-**Attention :** Ce coefficient $A$ correspond à $\ln a$, **et non** directement à $a$.
+**Attention :** Ce coefficient $\alpha$ correspond à $\ln a$, **et non** directement à $a$.
 :::
 
 L'ordonnée à l'origine est :
 
 $$
-B = \overline{Y} - A \cdot \overline{X}
+\beta = \overline{z} - \alpha \cdot \overline{x}
 $$
 
-où $\overline{Y}$ et $\overline{X}$ sont respectivement les moyennes de $Y$ et $X$.
+où $\overline{z}$ et $\overline{x}$ sont respectivement les moyennes de $z$ et $x$.
 
 ### **Récupération des coefficients $a$ et $b$**
 
-Étant donné que $A = \ln a$ et $B = \ln b$, nous retrouvons les valeurs de $a$ et $b$ par exponentiation :
+Étant donné que $\alpha = \ln a$ et $\beta = \ln b$, nous retrouvons les valeurs de $a$ et $b$ par exponentiation :
 
 $$
- a = e^A, \quad b = e^B.
+ a = e^\alpha, \quad b = e^\beta.
 $$
 
 ### **Modèle final**
@@ -742,36 +741,36 @@ $$
 En réinjectant ces valeurs dans l'équation exponentielle initiale, nous obtenons la fonction qui traduit la courbe ajustée :
 
 $$
- y = e^B \cdot (e^A)^x
+ y = e^\beta \cdot (e^\alpha)^x
 $$
 
 Par définition des exponentielles, cela revient à :
 
 $$
- y = e^B \cdot e^{Ax}
+ y = e^\beta \cdot e^{\alpha x}
 $$
 
 
 ### **Conclusion**
 
-Grâce à cette méthode, nous avons pu estimer les paramètres $a$ et $b$ du modèle exponentiel en appliquant une régression linéaire sur les valeurs transformées $\ln Y$. L'exponentiation des coefficients obtenus nous permet de retrouver les valeurs finales de $a$ et $b$, garantissant un ajustement correct du modèle exponentiel aux données.
+Grâce à cette méthode, nous avons pu estimer les paramètres $a$ et $b$ du modèle exponentiel en appliquant une régression linéaire sur les valeurs transformées $z$ ($\ln y$). L'exponentiation des coefficients obtenus nous permet de retrouver les valeurs finales de $a$ et $b$, garantissant un ajustement correct du modèle exponentiel aux données.
 
 ---
 
 ```{r echo=FALSE}
 
 # Transformation logarithmique des données
-y_log <- log(data$Y)
+z <- log(data$Y)
 
 # Covariance du nouveau modèle
-covariance_log <- sum(data$X * y_log) / length(data$X) - mean(data$X) * mean(y_log)
+covariance_log <- sum(data$X * z) / length(data$X) - mean(data$X) * mean(z)
 
 # Calcul des paramètres A et B
-a_log <- covariance_log / var_X_pearson
-b_log <- exp(mean(y_log) - a_log * mean(data$X))
+alpha <- covariance_log / var_X_pearson
+beta <- exp(mean(z) - alpha * mean(data$X))
 
 
-cat("A =", a_log, "B =", b_log)
+cat("Alpha =", alpha, "Beta =", beta)
 ```
 
 <br>
@@ -787,13 +786,13 @@ $$
 
 # Fonction exponentielle ajustée
 exponential_function <- function(x) {
-  b_log * exp(a_log*x)
+  beta * exp(alpha*x)
 }
 
 # Nuage de points avec droite de régression exponentielle + linéaire
 ggplot(data, aes(x = X, y = Y)) +
   geom_point(color = "red", size = 2) +
-  geom_abline(slope = -0.0835, intercept = 0.8565, color = "blue", linewidth = 1) +
+  geom_abline(slope = a, intercept = b, color = "blue", linewidth = 1) +
   stat_function(fun = exponential_function, color = "green", linewidth = 1) +
   labs(
     title = "Nuage de points : Dosage vs Bactéries",
@@ -805,7 +804,7 @@ ggplot(data, aes(x = X, y = Y)) +
 ```
 
 
-## __13.__
+## __Question 13 :__
 
 
 L’objectif est de comparer les modèles **linéaire** et **exponentiel** en utilisant le coefficient de détermination $R^2$.
@@ -881,6 +880,8 @@ Outre $R^2$, les résultats de `summary()` nous donnent plusieurs indications su
 
 ### 1. **Analyse du modèle exponentiel**
 
+#### **Résultat du code `R` :**
+
 - **P-value du coefficient** : $< 2.2e^{-16}$ (très significatif)
 - **Erreur standard résiduelle** : $0.1917$
 - **F-statistic** : $517.5$ (indique une forte relation entre $X$ et $\log(Y)$)
@@ -893,6 +894,8 @@ Outre $R^2$, les résultats de `summary()` nous donnent plusieurs indications su
 <br>
 
 ### 2. **Analyse du modèle linéaire**
+
+#### **Résultat du code `R` :**
 
 - **P-value du coefficient** : $< 2.2e^{-16}$ (très significatif)
 - **Erreur standard résiduelle** : $0.08306$ (plus faible que l’exponentiel)
@@ -925,7 +928,7 @@ Le **modèle linéaire a une erreur résiduelle plus faible**, ce qui peut indiq
 **Les deux modèles sont hautement significatifs (p-value < 2.2e-16)**, donc l’un comme l’autre sont pertinents.
 
 
-## __14.__
+## __Question 14 :__
 
 Nous cherchons à calculer, à partir de chacun des deux modèles, une prévision de la quantité de bactérie encore présente dans le corps 24 heures après l’injection d’une dose de 8 mL de sérum.
 
@@ -939,7 +942,7 @@ $$
 
 En remplaçant $x = 8$ :
 
-```{r}
+```{r echo=FALSE}
 
 cat("Y exponentiel =", 1.034294 * exp(-0.2093764 * 8))
 ```
@@ -954,7 +957,7 @@ $$
 
 En remplaçant $x = 8$ :
 
-```{r}
+```{r echo=FALSE}
 
 cat("Y linéaire =", -0.083513 * 8 + 0.856489)
 ```
@@ -974,18 +977,66 @@ Les deux modèles donnent des prévisions différentes pour la quantité de bact
 
 ## __Bonus__
 
+Nous pensons que Rick fera décroitre la densité de zombie quand la quantité de bactéries Y (en UFC/mL) sera nulle. On cherche donc à déterminer le temps nécessaire pour que la quantité de bactéries soit nulle. Pour cela, nous allons résoudre l'équation $y = 0$ pour chacun des modèles.
 
-On cherche dans le modèle exponentiel à résoudre l'équation suivante :
+### **Modèle exponentiel**
+
+Résolvons l'équation $y = 0$ pour le modèle exponentiel :
  
 $$
 y = 0 \Longleftrightarrow 1.034294 \times e^{-0.2093764 x} = 0 
 $$
 
-On cherche dans le modèle linéaire à résoudre l'équation suivante :
+---
+
+Cependant, il n'existe **aucune solution réelle** à cette équation. En effet, la fonction exponentielle
+$e^{-kx}$ est strictement positive pour tout réel $x$, quelle que soit la valeur de $k > 0$. Ainsi, le
+produit d'une constante strictement positive par une exponentielle décroissante reste toujours
+strictement positif.
+
+Autrement dit :
+
+$$
+\forall x \in \mathbb{R}, \quad y(x) > 0
+$$
+
+---
+
+#### Étude de la limite lorsque \( x \to +\infty \)
+
+Même si la fonction n’atteint jamais la valeur zéro, on peut s’intéresser à son comportement à l’infini. Calculons la limite :
+
+$$
+\lim_{x \to +\infty} y(x) = \lim_{x \to +\infty} 1{,}034294 \cdot e^{-0{,}2093764x}
+$$
+
+On sait que :
+
+$$
+\lim_{x \to +\infty} e^{-kx} = 0 \quad \text{pour tout } k > 0
+$$
+
+donc :
+
+$$
+\lim_{x \to +\infty} y(x) = 0
+$$
+
+---
+
+#### Conclusion
+
+La fonction \( y(x) = 1{,}034294 \cdot e^{-0{,}2093764x} \) tend vers zéro quand \( x \to +\infty \), mais ne l’atteint jamais. Il s’agit donc d’une asymptote horizontale en \( y = 0 \), ce qui explique l’absence de solution réelle à l’équation \( y(x) = 0 \).
+
+
+### **Modèle linéaire**
+
+Appliquons le même raisonnement pour le modèle linéaire :
 
 $$
 \hat{y} = 0 \Longleftrightarrow -0,083513x + 0,856489 = 0 
 $$
+
 $$
 \Longleftrightarrow -0,083513x = -0,856489
 $$
@@ -994,11 +1045,28 @@ $$
 \Longleftrightarrow x = \frac{-0,856489}{-0,083513}
 $$
 
-```{r}
+$$
+\Longleftrightarrow x \simeq 10.25576
+$$
 
-cat("X linéaire =", ((-0.856489)/(-0.083513))*24)
+```{r echo=FALSE}
+
+cat("X linéaire =", (-0.856489)/(-0.083513) )
 
 ```
+
+---
+
+### **Résultats**
+
+- **Modèle exponentiel** : Aucune solution réelle
+- **Modèle linéaire** : $\simeq $ 11 jours
+
+---
+
+### **Interprétation**
+
+Pour le modèle linéaire, la quantité de bactéries atteindra zéro après $\simeq$ 11 jours. Cela signifie que Rick devra attendre $\simeq$ 11 jours après l’injection d’une dose de 8 mL de sérum pour que la densité de zombies diminue assez pour qu'il sauve le monde.
 
 
 
