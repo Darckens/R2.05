@@ -1,10 +1,12 @@
 ---
-title: "Statistiques Descriptives 2"
+title: "R2-05 – STATISTIQUE DESCRIPTIVE 2<br>- Statistique bivariée – Ajustement -"
+subtitle: "Devoir Maison"
 author: "Ibrahim BENKHERFELLAH & Axel COULET"
-date: "2025-02-21"
+date: "21/02/2025"
 output:
   html_document:
     df_print: paged
+    md_extensions: +raw_html
   pdf_document:
     latex_engine: xelatex
   word_document: default
@@ -30,7 +32,7 @@ library(lmtest)
 ```
 
 ```{r eval=FALSE, include=FALSE}
-# FR : Exécutez ceci une seule fois
+# Exécutez ceci une seule fois
 
 font_import()
 loadfonts()
@@ -38,6 +40,8 @@ loadfonts()
 
 
 # __Exercice n°1__
+
+Même s'il y en a qu'un seul...
 
 ## __Question 1 :__\
 
@@ -101,7 +105,7 @@ cat("Variance de la quantité de bactéries : ", var_Y_pearson)
 <br>
 
 ::: {.alert .alert-warning}
-**Attention :** Ici, la variance est calculée selon la formule de König-Huygens. Il s'agit de la moyenne des carrés des écarts à la moyenne.
+**Attention :** Ici, la variance est calculée selon la formule de Pearson. Il s'agit de la moyenne des carrés des écarts à la moyenne.
 :::
 
 <br>
@@ -287,7 +291,8 @@ Le coefficient de corrélation linéaire de Pearson est de __$-0,9493844$__. Ce 
 
 ## __Question 7 :__
 
-# Introduction
+### Introduction
+
 On sait qu'une droite affine s'exprime de la façon suivante : **$y = ax + b$**
 
 Par la méthode de Legendre, aussi appelée méthode des moindres carrés, on peut trouver les coefficients $a$ et $b$ de la droite de régression linéaire qui minimise la somme des carrés des résidus. Autrement dit, on cherche $\hat{a}$ et $\hat{b}$ tels que :
@@ -301,13 +306,13 @@ Dans un modèle linéaire, le meilleur coefficient directeur (au sens des moindr
 $$
 \hat{a} = \frac{\text{Cov}(x, y)}{\sigma_x^2}
 $$
-**et**
+et
 
 $$
 \hat{b} = \bar{y} - \hat{a}x 
 $$
 
-# Démonstration
+### Démonstration
 
 $$
 \frac{\partial f}{\partial a} = \sum_{i=1}^N (2*(y_i - ax_i -b)(-x_i))
@@ -317,7 +322,9 @@ $$
 \frac{\partial f}{\partial b} = \sum_{i=1}^N (2*(y_i - ax_i -b)(-1))
 $$
 
-**On cherche :** $~~ \frac{\partial f}{\partial a} = 0~~$ et  $~~ \frac{\partial f}{\partial b} = 0~~$
+On cherche : $~~ \frac{\partial f}{\partial a} = 0~~$ et  $~~ \frac{\partial f}{\partial b} = 0~~$
+
+<br>
 
 D’où le système suivant :
 
@@ -387,6 +394,8 @@ $$
 
 ### Applications 
 
+Avec R, nous trouvons :
+
 ```{r echo=FALSE}
 
 # Calcul de la variance de X
@@ -400,6 +409,7 @@ b <- mean(data$Y) - a * mean(data$X)
 cat("a =", a, "b =", b)
 ```
 
+Ainsi, nous obtenons :
 
 <br> 
 
@@ -418,13 +428,17 @@ $$
 ### Récapitulatif
 
 <br>
+
 $$\begin{cases}
 \hat{a} = 0,083513\\
 \hat{b} = 0,856489
 \end{cases}
-~ ~ \Longrightarrow  ~ ~ ~ \hat{y} ~ = ~ -0,083513x ~ + ~ 0,856489$$
+~ ~ \Longrightarrow  ~ ~ ~ \hat{y}_{lin} ~ = ~ -0,083513x ~ + ~ 0,856489$$
 
 <br>
+
+Voici le nuage de points avec la droite de régression :
+
 ```{r echo=FALSE, fig.align='center'}
 
 # Nuage de points avec droite de régression
@@ -447,6 +461,7 @@ En observant le nuage de points, on voit clairement que lorsque le dosage de sé
 
 ## __Question 9 :__
 
+Résultat du code R pour `summary()` :
 ```{r echo=FALSE}
 
 # Ajustement du modèle linéaire
@@ -513,8 +528,10 @@ A l'aide de R, on trouve :
 ```{r echo=FALSE}
 
 # Calcul de la somme des carrés des résidus
-deviance(LMS)
-sum(residuals(LMS)^2)
+
+# deviance(LMS) ou :
+
+cat("SCR =", sum(residuals(LMS)^2))
 ```
 <br>
 
@@ -543,7 +560,7 @@ Plus la $SCR$ est faible, plus le modèle est performant. Dans notre cas, la $SC
 
 ##### **Qu'est ce que la fonction `acf()`** 
 
-De manière générale, a fonction **`acf()`** permet de tracer la fonction d'autocorrélation d'une série temporelle. Elle permet de visualiser les corrélations entre les observations d'une série en fonction du décalage entre elles.
+En général, la fonction **`acf()`** permet de tracer la fonction d'autocorrélation d'une série temporelle. Elle permet de visualiser les corrélations entre les observations d'une série en fonction du décalage entre elles.
 
 Voici le graphique obtenu à l'aide de R :
 
@@ -640,7 +657,7 @@ Cela signifie que **les résidus `(SCR)` suivent une distribution normale** au s
 
 <br>
 
-#### i\)
+#### ii\)
 
 ```{r echo=FALSE, fig.align='center'}
 
@@ -655,7 +672,7 @@ qqline(residuals, col = "red")
 ##### **Interprétation du Q-Q Plot**
 
 - **Alignement des points** :  
-  Les points du Q-Q plot des **résidus** sont quasiment alignés sur la droite diagonale (celle tracée en rouge). Cela suggère que les quantiles observés des **résidus** correspondent étroitement aux quantiles théoriques d’une distribution normale.
+  Les points du Q-Q plot des **résidus** sont pour la plupart alignés sur la droite diagonale (celle tracée en rouge). Cela suggère que les quantiles observés des **résidus** correspondent étroitement aux quantiles théoriques d’une distribution normale.
 
 - **Extrémités (queues de distribution) :**  
   Les points situés aux extrémités ne s’écartent pas significativement de la droite, ce qui renforce l’idée que les **résidus** présente les caractéristiques d’une distribution normale.
@@ -665,8 +682,6 @@ Les **résidus semblent donc être normalement distribué.**
 ---
 
 ##### **Conclusion générale**
-
-<br>
 
 Le test de **Shapiro-Wilk** et le **Q-Q plot** des résidus indiquent que ces derniers suivent une **distribution normale**. Cela confirme que les résidus du modèle de régression linéaire sont bien distribués selon une **loi normale**.
 
@@ -741,21 +756,22 @@ $$
 En réinjectant ces valeurs dans l'équation exponentielle initiale, nous obtenons la fonction qui traduit la courbe ajustée :
 
 $$
- y = e^\beta \cdot (e^\alpha)^x
+ \hat{y}_{exp} = e^\beta \cdot (e^\alpha)^x
 $$
 
 Par définition des exponentielles, cela revient à :
 
 $$
- y = e^\beta \cdot e^{\alpha x}
+ \hat{y}_{exp} = e^\beta \cdot e^{\alpha x}
 $$
 
 
 ### **Conclusion**
 
-Grâce à cette méthode, nous avons pu estimer les paramètres $a$ et $b$ du modèle exponentiel en appliquant une régression linéaire sur les valeurs transformées $z$ ($\ln y$). L'exponentiation des coefficients obtenus nous permet de retrouver les valeurs finales de $a$ et $b$, garantissant un ajustement correct du modèle exponentiel aux données.
+Grâce à cette méthode, nous avons pu estimer les paramètres $\alpha$ et $\beta$ du modèle exponentiel en appliquant une régression linéaire sur les valeurs transformées $z ~(\ln y)$. L'exponentiation des coefficients obtenus nous permet de retrouver les valeurs finales de $a$ et $b$, garantissant un ajustement correct du modèle exponentiel aux données.
 
 ---
+
 
 ```{r echo=FALSE}
 
@@ -778,9 +794,12 @@ cat("Alpha =", alpha, "Beta =", beta)
 ### **Modèle exponentiel ajusté**
 
 $$
-y = 1.034294 \times e^{-0.2093764 x}
+\hat{y}_{exp} = 1.034294 \times e^{-0.2093764 x}
 $$
+
 <br>
+
+Visualisation du nuage de points avec les droites de régression linéaire et exponentielle :
 
 ```{r echo=FALSE, fig.align='center'}
 
@@ -845,7 +864,7 @@ $$
 
 #### **Modèle exponentiel**
 
-A l'aide du logarithme népérien, nous avons estimé les paramètres $A$ et $B$ du modèle exponentiel. En utilisant R, on trouve le R² suivant :
+A l'aide du logarithme népérien, nous avons estimé les paramètres $\alpha$ et $\beta$ du modèle exponentiel. En utilisant R, on trouve le R² suivant :
 
 
 ```{r echo=FALSE}
@@ -937,14 +956,16 @@ Nous cherchons à calculer, à partir de chacun des deux modèles, une prévisio
 Dans le modèle exponentiel, nous avons :
 
 $$
-y = 1.034294 \times e^{-0.2093764 x}
+\hat{y}_{exp} = 1.034294 \times e^{-0.2093764 x}
 $$
 
 En remplaçant $x = 8$ :
 
 ```{r echo=FALSE}
 
-cat("Y exponentiel =", 1.034294 * exp(-0.2093764 * 8))
+exp_modele_8_ML <- beta * exp(alpha * 8)
+
+cat("Y exponentiel =", exp_modele_8_ML)
 ```
 
 ### **Modèle linéaire**
@@ -952,32 +973,63 @@ cat("Y exponentiel =", 1.034294 * exp(-0.2093764 * 8))
 Dans le modèle linéaire, nous avons :
 
 $$
-\hat{y} = -0,083513x + 0,856489
+\hat{y}_{lin} = -0,083513x + 0,856489
 $$
 
 En remplaçant $x = 8$ :
 
 ```{r echo=FALSE}
 
-cat("Y linéaire =", -0.083513 * 8 + 0.856489)
+lin_modele_8_ML <- a * 8 + b
+
+cat("Y linéaire =", lin_modele_8_ML)
 ```
 
 ---
 
 ### **Résultats**
 
-- **Modèle exponentiel** : $0.1943$
-- **Modèle linéaire** : $0.1885$
+- **Modèle exponentiel** : $0.193729$
+- **Modèle linéaire** : $0.188379$
 
 ---
 
+## Analyse des résultats
+
+Nous avons trouvé à la **question 13** que le modèle exponentiel explique un peu mieux la
+variance des données, mais que le modèle linéaire a une erreur résiduelle plus faible. 
+
+Donc, pour une dose de 8 mL de sérum, nous pouvons conclure que les deux modèles donnent des
+résultats relativement proches. Cela signifie que les deux modèles peuvent être utilisés pour
+prédire la quantité de bactéries restante après 24 heures. Cependant, le modèle linéaire semble
+plus précis pour des valeurs proches de 8, tandis que le modèle exponentiel est plus précis
+pour des valeurs plus éloignées.
+
+
 ### **Interprétation**
 
-Les deux modèles donnent des prévisions différentes pour la quantité de bactéries restante 24 heures après l’injection d’une dose de 8 mL de sérum. 
+Ne sachant pas vraiment qu'elle choix faire entre les deux modèles, nous allons prendre la
+moyenne des deux résultats pour obtenir une prévision plus fiable.
+
+Calculons la moyenne des deux résultats :
+
+```{r echo=FALSE}
+
+cat("Moyenne des deux modèles =", (lin_modele_8_ML + exp_modele_8_ML) / 2)
+```
+
+### **Conclusion**
+
+En moyenne, les deux modèles prévoient une densité de bactéries d’environ **0.1910542 UFC/mL**
+après 24 heures. Cette valeur peut être utilisée pour évaluer l’efficacité du sérum et la
+diminution de la densité de zombies dans le corps.
 
 ## __Bonus__
 
-Nous pensons que Rick fera décroitre la densité de zombie quand la quantité de bactéries Y (en UFC/mL) sera nulle. On cherche donc à déterminer le temps nécessaire pour que la quantité de bactéries soit nulle. Pour cela, nous allons résoudre l'équation $y = 0$ pour chacun des modèles.
+Nous pensons que Rick fera décroitre la densité de zombie quand la quantité de bactéries Y (en
+UFC/mL) sera nulle. On cherche donc à déterminer le temps nécessaire pour que la quantité de
+bactéries soit nulle. Pour cela, nous allons résoudre l'équation $y = 0$ pour chacun des
+modèles.
 
 ### **Modèle exponentiel**
 
@@ -1026,7 +1078,8 @@ $$
 
 #### Conclusion
 
-La fonction \( y(x) = 1{,}034294 \cdot e^{-0{,}2093764x} \) tend vers zéro quand \( x \to +\infty \), mais ne l’atteint jamais. Il s’agit donc d’une asymptote horizontale en \( y = 0 \), ce qui explique l’absence de solution réelle à l’équation \( y(x) = 0 \).
+La fonction \( y(x) = 1{,}034294 \cdot e^{-0{,}2093764x} \) tend vers zéro quand \( x \to +\infty \), 
+mais ne l’atteint jamais. Il s’agit donc d’une asymptote horizontale en \( y = 0 \), ce qui explique l’absence de solution réelle à l’équation \( y(x) = 0 \).
 
 
 ### **Modèle linéaire**
@@ -1046,12 +1099,12 @@ $$
 $$
 
 $$
-\Longleftrightarrow x \simeq 10.25576
+\Longleftrightarrow x \simeq 10.25566
 $$
 
 ```{r echo=FALSE}
 
-cat("X linéaire =", (-0.856489)/(-0.083513) )
+cat("X linéaire =", -b/a)
 
 ```
 
@@ -1060,15 +1113,14 @@ cat("X linéaire =", (-0.856489)/(-0.083513) )
 ### **Résultats**
 
 - **Modèle exponentiel** : Aucune solution réelle
-- **Modèle linéaire** : $\simeq $ 11 jours
+- **Modèle linéaire** : $\simeq$ 11 jours
 
 ---
 
 ### **Interprétation**
 
-Pour le modèle linéaire, la quantité de bactéries atteindra zéro après $\simeq$ 11 jours. Cela signifie que Rick devra attendre $\simeq$ 11 jours après l’injection d’une dose de 8 mL de sérum pour que la densité de zombies diminue assez pour qu'il sauve le monde.
-
-
-
+Pour le modèle linéaire, la quantité de bactéries atteindra zéro après $\simeq$ 11 jours. Cela signifie 
+que Rick devra attendre $\simeq$ 11 jours après l’injection d’une dose de 8 mL de sérum pour que la 
+densité de zombies diminue assez pour qu'il sauve le monde.
 
 
